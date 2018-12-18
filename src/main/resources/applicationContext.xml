@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+
+    <context:annotation-config />
+
+    <!-- 对service包中的所有类进行扫描，可以有多个包使用逗号分隔包名，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.pace2car.service" />
+
+    <!-- 可以本配置文件中引用属性文件中的值
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:jdbc.properties"/>
+	</bean>
+    -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 声明一个数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <!-- <property name="driver" value="${jdbc.driver}"></property> -->
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="1" />
+        <property name="maxActive" value="20" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="validationQuery" value="SELECT 'x' FROM DUAL" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j" />
+    </bean>
+
+
+    <!-- 声明mybatis SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- myBatis配置文件 -->
+        <!-- <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+        <!--
+            可以在Configuration.xml或此处配置映射文件，但其中不能有相同id的parameterMap, resultMap或sql等
+        <property name="mapperLocations" value="classpath*:dao/*.xml" />
+		 -->
+        <property name="mapperLocations" value="classpath*:mapper/*.xml" />
+        <property name="typeAliasesPackage" value="com.pace2car.bean" />
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>
+                            <!-- 支持通过Mapper接口参数来传递分页参数
+   helperDialect=oracle,mysql,mariadb,sqlite,hsqldb,postgresql,db2,sqlserver,informix,h2,sqlserver2012,derby
+                            -->
+                            helperDialect=oracle
+                            supportMethodsArguments=true
+                            rowBoundsWithCount=true
+                            offsetAsPageNum=true
+                            pageSizeZero=false
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+
+    </bean>
+
+    <!-- Scan Mapper Interface Files
+        扫描mybatis映射器接口，并将这此接口作成组件
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.pace2car.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--================事务相关控制===================-->
+
+    <!-- 事务管理器 -->
+    <bean name="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <!-- aop事务切入点 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- Service类的方法模式
+                name="insert*"                      : 方法名的模式insertXxx()
+                propagation="REQUIRED|Mandatory|Requires_New|..."   : 事务的传播行为
+                read-only="false"                                   : 事务的读写特性，read-only="true"即在该事务内只能作查询
+                rollback-for="java.lang.Exception"                  ：当遇到此类异常时事务回滚
+            -->
+            <tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+            <tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+            <tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+            <tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 声明式事务 -->
+    <aop:config>
+        <!--把事务控制在Service层-->
+        <!--<aop:pointcut id="txPointcut"-->
+                      <!--expression="execution(public * com.pace2car.service..*.*(..))" />-->
+        <!--<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />-->
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(public * com.pace2car.service..*.*(..))" />
+     </aop:config>
+
+
+
+</beans>

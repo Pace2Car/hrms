@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pace2car.dao.AttendanceMapper">
+    <resultMap id="BaseResultMap" type="com.pace2car.bean.Attendance">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="emp_no" property="empNo" jdbcType="INTEGER"/>
+        <result column="effect_date" property="effectDate" jdbcType="DATE"/>
+        <result column="end_date" property="endDate" jdbcType="DATE"/>
+        <result column="late_times" property="lateTimes" jdbcType="INTEGER"/>
+        <result column="leave_early_times" property="leaveEarlyTimes" jdbcType="INTEGER"/>
+        <result column="completion_times" property="completionTimes" jdbcType="INTEGER"/>
+        <result column="leave_times" property="leaveTimes" jdbcType="INTEGER"/>
+        <result column="overtime_hours" property="overtimeHours" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        emp_no,
+        effect_date,
+        end_date,
+        late_times,
+        leave_early_times,
+        completion_times,
+        leave_times,
+        overtime_hours
+    </sql>
+    <select id="selectAttendances" resultType="Attendance" parameterType="Attendance">
+        select
+            a.id                as id,
+            a.emp_no            as empNo,
+            a.effect_date       as effectDate,
+            a.end_date          as endDate,
+            a.late_times        as lateTimes,
+            a.leave_early_times as leaveEarlyTimes,
+            a.completion_times  as completionTimes,
+            a.leave_times       as leaveTimes,
+            a.overtime_hours    as overtimeHours,
+            e.emp_name          as empName
+        from attendance a
+                 left join employee e on a.emp_no = e.emp_no
+        where 1 = 1
+        <if test="effectDate != null">
+            and a.effect_date &gt;= #{effectDate,jdbcType=DATE}
+        </if>
+        <if test="endDate != null">
+            and a.end_date &lt;= #{endDate,jdbcType=DATE}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from attendance
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from attendance
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.pace2car.bean.Attendance" useGeneratedKeys="true" keyProperty="id">
+        insert into attendance (emp_no, effect_date, end_date,
+                                late_times, leave_early_times, completion_times,
+                                leave_times, overtime_hours)
+        values (#{empNo,jdbcType=INTEGER}, #{effectDate,jdbcType=DATE}, #{endDate,jdbcType=DATE},
+                #{lateTimes,jdbcType=INTEGER}, #{leaveEarlyTimes,jdbcType=INTEGER}, #{completionTimes,jdbcType=INTEGER},
+                #{leaveTimes,jdbcType=INTEGER}, #{overtimeHours,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.pace2car.bean.Attendance" useGeneratedKeys="true" keyProperty="id">
+        insert into attendance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="empNo != null">
+                emp_no,
+            </if>
+            <if test="effectDate != null">
+                effect_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            <if test="lateTimes != null">
+                late_times,
+            </if>
+            <if test="leaveEarlyTimes != null">
+                leave_early_times,
+            </if>
+            <if test="completionTimes != null">
+                completion_times,
+            </if>
+            <if test="leaveTimes != null">
+                leave_times,
+            </if>
+            <if test="overtimeHours != null">
+                overtime_hours,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="empNo != null">
+                #{empNo,jdbcType=INTEGER},
+            </if>
+            <if test="effectDate != null">
+                #{effectDate,jdbcType=DATE},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=DATE},
+            </if>
+            <if test="lateTimes != null">
+                #{lateTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leaveEarlyTimes != null">
+                #{leaveEarlyTimes,jdbcType=INTEGER},
+            </if>
+            <if test="completionTimes != null">
+                #{completionTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leaveTimes != null">
+                #{leaveTimes,jdbcType=INTEGER},
+            </if>
+            <if test="overtimeHours != null">
+                #{overtimeHours,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.Attendance">
+        update attendance
+        <set>
+            <if test="empNo != null">
+                emp_no = #{empNo,jdbcType=INTEGER},
+            </if>
+            <if test="effectDate != null">
+                effect_date = #{effectDate,jdbcType=DATE},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate,jdbcType=DATE},
+            </if>
+            <if test="lateTimes != null">
+                late_times = #{lateTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leaveEarlyTimes != null">
+                leave_early_times = #{leaveEarlyTimes,jdbcType=INTEGER},
+            </if>
+            <if test="completionTimes != null">
+                completion_times = #{completionTimes,jdbcType=INTEGER},
+            </if>
+            <if test="leaveTimes != null">
+                leave_times = #{leaveTimes,jdbcType=INTEGER},
+            </if>
+            <if test="overtimeHours != null">
+                overtime_hours = #{overtimeHours,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.Attendance">
+        update attendance
+        set emp_no            = #{empNo,jdbcType=INTEGER},
+            effect_date       = #{effectDate,jdbcType=DATE},
+            end_date          = #{endDate,jdbcType=DATE},
+            late_times        = #{lateTimes,jdbcType=INTEGER},
+            leave_early_times = #{leaveEarlyTimes,jdbcType=INTEGER},
+            completion_times  = #{completionTimes,jdbcType=INTEGER},
+            leave_times       = #{leaveTimes,jdbcType=INTEGER},
+            overtime_hours    = #{overtimeHours,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

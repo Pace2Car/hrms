@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pace2car.dao.BonusMulctRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.pace2car.bean.BonusMulctRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="emp_no" property="empNo" jdbcType="INTEGER" />
+    <result column="bm_date" property="bmDate" jdbcType="TIMESTAMP" />
+    <result column="bm_amount" property="bmAmount" jdbcType="DOUBLE" />
+    <result column="bm_reason" property="bmReason" jdbcType="VARCHAR" />
+    <result column="bm_type" property="bmType" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, emp_no, bm_date, bm_amount, bm_reason, bm_type, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bonus_mulct_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bonus_mulct_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pace2car.bean.BonusMulctRecord" useGeneratedKeys="true" keyProperty="id" >
+    insert into bonus_mulct_record (emp_no, bm_date, bm_amount, 
+      bm_reason, bm_type, remark
+      )
+    values (#{empNo,jdbcType=INTEGER}, #{bmDate,jdbcType=TIMESTAMP}, #{bmAmount,jdbcType=DOUBLE}, 
+      #{bmReason,jdbcType=VARCHAR}, #{bmType,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pace2car.bean.BonusMulctRecord" useGeneratedKeys="true" keyProperty="id" >
+    insert into bonus_mulct_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="empNo != null" >
+        emp_no,
+      </if>
+      <if test="bmDate != null" >
+        bm_date,
+      </if>
+      <if test="bmAmount != null" >
+        bm_amount,
+      </if>
+      <if test="bmReason != null" >
+        bm_reason,
+      </if>
+      <if test="bmType != null" >
+        bm_type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="empNo != null" >
+        #{empNo,jdbcType=INTEGER},
+      </if>
+      <if test="bmDate != null" >
+        #{bmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bmAmount != null" >
+        #{bmAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="bmReason != null" >
+        #{bmReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bmType != null" >
+        #{bmType,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.BonusMulctRecord" >
+    update bonus_mulct_record
+    <set >
+      <if test="empNo != null" >
+        emp_no = #{empNo,jdbcType=INTEGER},
+      </if>
+      <if test="bmDate != null" >
+        bm_date = #{bmDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bmAmount != null" >
+        bm_amount = #{bmAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="bmReason != null" >
+        bm_reason = #{bmReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bmType != null" >
+        bm_type = #{bmType,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.BonusMulctRecord" >
+    update bonus_mulct_record
+    set emp_no = #{empNo,jdbcType=INTEGER},
+      bm_date = #{bmDate,jdbcType=TIMESTAMP},
+      bm_amount = #{bmAmount,jdbcType=DOUBLE},
+      bm_reason = #{bmReason,jdbcType=VARCHAR},
+      bm_type = #{bmType,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

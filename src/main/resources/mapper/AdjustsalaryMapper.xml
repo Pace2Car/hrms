@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pace2car.dao.AdjustsalaryMapper" >
+  <resultMap id="BaseResultMap" type="com.pace2car.bean.Adjustsalary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="emp_no" property="empNo" jdbcType="INTEGER" />
+    <result column="adjust_Date" property="adjustDate" jdbcType="DATE" />
+    <result column="beforeSalary" property="beforesalary" jdbcType="INTEGER" />
+    <result column="afterSalary" property="aftersalary" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, emp_no, adjust_Date, beforeSalary, afterSalary, reason, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from adjustsalary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from adjustsalary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pace2car.bean.Adjustsalary" useGeneratedKeys="true" keyProperty="id" >
+    insert into adjustsalary (emp_no, adjust_Date, beforeSalary, 
+      afterSalary, reason, remark
+      )
+    values (#{empNo,jdbcType=INTEGER}, #{adjustDate,jdbcType=DATE}, #{beforesalary,jdbcType=INTEGER}, 
+      #{aftersalary,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pace2car.bean.Adjustsalary" useGeneratedKeys="true" keyProperty="id" >
+    insert into adjustsalary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="empNo != null" >
+        emp_no,
+      </if>
+      <if test="adjustDate != null" >
+        adjust_Date,
+      </if>
+      <if test="beforesalary != null" >
+        beforeSalary,
+      </if>
+      <if test="aftersalary != null" >
+        afterSalary,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="empNo != null" >
+        #{empNo,jdbcType=INTEGER},
+      </if>
+      <if test="adjustDate != null" >
+        #{adjustDate,jdbcType=DATE},
+      </if>
+      <if test="beforesalary != null" >
+        #{beforesalary,jdbcType=INTEGER},
+      </if>
+      <if test="aftersalary != null" >
+        #{aftersalary,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.Adjustsalary" >
+    update adjustsalary
+    <set >
+      <if test="empNo != null" >
+        emp_no = #{empNo,jdbcType=INTEGER},
+      </if>
+      <if test="adjustDate != null" >
+        adjust_Date = #{adjustDate,jdbcType=DATE},
+      </if>
+      <if test="beforesalary != null" >
+        beforeSalary = #{beforesalary,jdbcType=INTEGER},
+      </if>
+      <if test="aftersalary != null" >
+        afterSalary = #{aftersalary,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.Adjustsalary" >
+    update adjustsalary
+    set emp_no = #{empNo,jdbcType=INTEGER},
+      adjust_Date = #{adjustDate,jdbcType=DATE},
+      beforeSalary = #{beforesalary,jdbcType=INTEGER},
+      afterSalary = #{aftersalary,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

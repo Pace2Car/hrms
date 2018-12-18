@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pace2car.dao.EmployeeMapper">
+    <resultMap id="BaseResultMap" type="com.pace2car.bean.Employee">
+        <id column="emp_no" jdbcType="INTEGER" property="empNo"/>
+        <result column="emp_name" jdbcType="VARCHAR" property="empName"/>
+        <result column="dept_no" jdbcType="INTEGER" property="deptNo"/>
+        <result column="base_salary" jdbcType="DOUBLE" property="baseSalary"/>
+        <result column="bonus" jdbcType="DOUBLE" property="bonus"/>
+        <result column="mulct" jdbcType="DOUBLE" property="mulct"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="ethnic" jdbcType="VARCHAR" property="ethnic"/>
+        <result column="telephone" jdbcType="CHAR" property="telephone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="education" jdbcType="VARCHAR" property="education"/>
+        <result column="position_id" jdbcType="INTEGER" property="positionId"/>
+        <result column="entry_time" jdbcType="TIMESTAMP" property="entryTime"/>
+        <result column="departure_time" jdbcType="TIMESTAMP" property="departureTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="contract_no" jdbcType="INTEGER" property="contractNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        emp_no,
+        emp_name,
+        dept_no,
+        base_salary,
+        bonus,
+        mulct,
+        gender,
+        birthday,
+        ethnic,
+        telephone,
+        email,
+        address,
+        education,
+        position_id,
+        entry_time,
+        departure_time,
+        status,
+        contract_no
+    </sql>
+    <select id="selectEmployees" resultMap="BaseResultMap" parameterType="Employee">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where
+        status = 1
+    </select>
+    <select id="selectEmpPosition" resultType="Employee" parameterType="Employee">
+        select
+            e.emp_no   as empNo,
+            e.emp_name as empName,
+            p.pos_name as posName
+        from employee e
+                 left join position p on e.position_id = p.id
+        where
+            e.status = 1
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where emp_no = #{empNo,jdbcType=INTEGER}
+        and status = 1
+    </select>
+    <select id="selectPosByPrimaryKey" parameterType="java.lang.Integer" resultType="Employee">
+        select
+            e.emp_no      as empNo,
+            e.emp_name    as empName,
+            e.position_id as positionId,
+            p.pos_name    as posName
+        from employee e
+                 left join position p on e.position_id = p.id
+        where emp_no = #{empNo,jdbcType=INTEGER}
+          and e.status = 1
+    </select>
+    <select id="selectSalByPrimaryKey" parameterType="java.lang.Integer" resultType="Employee">
+        select
+            e.emp_no      as empNo,
+            e.emp_name    as empName,
+            e.base_salary    as baseSalary,
+            e.bonus    as bonus,
+            e.mulct    as mulct,
+            d.dept_name    as deptName
+        from employee e
+                 left join department d on e.dept_no = d.dept_no
+        where emp_no = #{empNo,jdbcType=INTEGER}
+          and e.status = 1
+    </select>
+    <select id="selectSalByDeptNo" parameterType="Employee" resultType="Employee">
+        select
+            e.emp_no      as empNo,
+            e.emp_name    as empName,
+            e.base_salary    as baseSalary,
+            e.bonus    as bonus,
+            e.mulct    as mulct,
+            d.dept_name    as deptName
+        from employee e
+                 left join department d on e.dept_no = d.dept_no
+        where e.status = 1
+        <if test="deptNo != null">
+            and e.dept_no = #{deptNo,jdbcType=INTEGER}
+        </if>
+    </select>
+    <update id="deleteByPrimaryKey" parameterType="Employee">
+        update employee
+        set departure_time = #{departureTime,jdbcType=DATE},
+            status         = 0
+        where emp_no = #{empNo,jdbcType=INTEGER}
+    </update>
+    <insert id="insert" keyProperty="empNo" parameterType="com.pace2car.bean.Employee" useGeneratedKeys="true">
+        insert into employee (emp_name, dept_no, base_salary,
+                              bonus, mulct, gender,
+                              birthday, ethnic, telephone,
+                              email, address, education,
+                              position_id, entry_time, departure_time,
+                              status, contract_no)
+        values (#{empName,jdbcType=VARCHAR}, #{deptNo,jdbcType=INTEGER}, #{baseSalary,jdbcType=DOUBLE},
+                #{bonus,jdbcType=DOUBLE}, #{mulct,jdbcType=DOUBLE}, #{gender,jdbcType=VARCHAR},
+                #{birthday,jdbcType=DATE}, #{ethnic,jdbcType=VARCHAR}, #{telephone,jdbcType=CHAR},
+                #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},
+                #{positionId,jdbcType=INTEGER}, #{entryTime,jdbcType=TIMESTAMP}, #{departureTime,jdbcType=TIMESTAMP},
+                #{status,jdbcType=INTEGER}, #{contractNo,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyProperty="empNo" parameterType="com.pace2car.bean.Employee" useGeneratedKeys="true">
+        insert into employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="empName != null">
+                emp_name,
+            </if>
+            <if test="deptNo != null">
+                dept_no,
+            </if>
+            <if test="baseSalary != null">
+                base_salary,
+            </if>
+            <if test="bonus != null">
+                bonus,
+            </if>
+            <if test="mulct != null">
+                mulct,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="ethnic != null">
+                ethnic,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="education != null">
+                education,
+            </if>
+            <if test="positionId != null">
+                position_id,
+            </if>
+            <if test="entryTime != null">
+                entry_time,
+            </if>
+            <if test="departureTime != null">
+                departure_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="contractNo != null">
+                contract_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="empName != null">
+                #{empName,jdbcType=VARCHAR},
+            </if>
+            <if test="deptNo != null">
+                #{deptNo,jdbcType=INTEGER},
+            </if>
+            <if test="baseSalary != null">
+                #{baseSalary,jdbcType=DOUBLE},
+            </if>
+            <if test="bonus != null">
+                #{bonus,jdbcType=DOUBLE},
+            </if>
+            <if test="mulct != null">
+                #{mulct,jdbcType=DOUBLE},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="ethnic != null">
+                #{ethnic,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="positionId != null">
+                #{positionId,jdbcType=INTEGER},
+            </if>
+            <if test="entryTime != null">
+                #{entryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="departureTime != null">
+                #{departureTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="contractNo != null">
+                #{contractNo,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.Employee">
+        update employee
+        <set>
+            <if test="empName != null">
+                emp_name = #{empName,jdbcType=VARCHAR},
+            </if>
+            <if test="deptNo != null">
+                dept_no = #{deptNo,jdbcType=INTEGER},
+            </if>
+            <if test="baseSalary != null">
+                base_salary = #{baseSalary,jdbcType=DOUBLE},
+            </if>
+            <if test="bonus != null">
+                bonus = #{bonus,jdbcType=DOUBLE},
+            </if>
+            <if test="mulct != null">
+                mulct = #{mulct,jdbcType=DOUBLE},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="ethnic != null">
+                ethnic = #{ethnic,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                education = #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="positionId != null">
+                position_id = #{positionId,jdbcType=INTEGER},
+            </if>
+            <if test="entryTime != null">
+                entry_time = #{entryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="departureTime != null">
+                departure_time = #{departureTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="contractNo != null">
+                contract_no = #{contractNo,jdbcType=INTEGER},
+            </if>
+        </set>
+        where emp_no = #{empNo,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.Employee">
+        update employee
+        set emp_name       = #{empName,jdbcType=VARCHAR},
+            dept_no        = #{deptNo,jdbcType=INTEGER},
+            base_salary    = #{baseSalary,jdbcType=DOUBLE},
+            bonus          = #{bonus,jdbcType=DOUBLE},
+            mulct          = #{mulct,jdbcType=DOUBLE},
+            gender         = #{gender,jdbcType=VARCHAR},
+            birthday       = #{birthday,jdbcType=DATE},
+            ethnic         = #{ethnic,jdbcType=VARCHAR},
+            telephone      = #{telephone,jdbcType=CHAR},
+            email          = #{email,jdbcType=VARCHAR},
+            address        = #{address,jdbcType=VARCHAR},
+            education      = #{education,jdbcType=VARCHAR},
+            position_id    = #{positionId,jdbcType=INTEGER},
+            entry_time     = #{entryTime,jdbcType=TIMESTAMP},
+            departure_time = #{departureTime,jdbcType=TIMESTAMP},
+            status         = #{status,jdbcType=INTEGER},
+            contract_no    = #{contractNo,jdbcType=INTEGER}
+        where emp_no = #{empNo,jdbcType=INTEGER}
+    </update>
+</mapper>

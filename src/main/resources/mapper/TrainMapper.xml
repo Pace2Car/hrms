@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pace2car.dao.TrainMapper">
+    <resultMap id="BaseResultMap" type="com.pace2car.bean.Train">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="subject" property="subject" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="DATE"/>
+        <result column="end_time" property="endTime" jdbcType="DATE"/>
+        <result column="train_type" property="trainType" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="budget" property="budget" jdbcType="DOUBLE"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="emp_no" property="empNo" jdbcType="INTEGER"/>
+        <result column="dept_no" property="deptNo" jdbcType="INTEGER"/>
+        <result column="refuse_reason" property="refuseReason" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        subject,
+        start_time,
+        end_time,
+        train_type,
+        description,
+        budget,
+        status,
+        emp_no,
+        dept_no,
+        refuse_reason
+    </sql>
+    <select id="selectTrains" resultType="Train" parameterType="Train">
+        select
+            t.id as id,
+            t.subject as subject,
+            t.start_time as startTime,
+            t.end_time as endTime,
+            t.train_type as trainType,
+            t.description as description,
+            t.budget as budget,
+            t.status as status,
+            t.emp_no as empNo,
+            t.dept_no as deptNo,
+            t.refuse_reason as refuseReason,
+            e.emp_name as empName,
+            d.dept_name as deptName
+        from train t
+        left join employee e on t.emp_no = e.emp_no
+        left join department d on t.dept_no = d.dept_no
+        where t.end_time &gt;= #{endTime,jdbcType=DATE}
+        <if test="status != null">
+            and t.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="empNo != null">
+            and t.emp_no = #{empNo,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from train
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from train
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.pace2car.bean.Train" useGeneratedKeys="true" keyProperty="id">
+        insert into train (subject, start_time, end_time,
+                           train_type, description, budget,
+                           status, emp_no, dept_no,
+                           refuse_reason)
+        values (#{subject,jdbcType=VARCHAR}, #{startTime,jdbcType=DATE}, #{endTime,jdbcType=DATE},
+                #{trainType,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{budget,jdbcType=DOUBLE},
+                #{status,jdbcType=INTEGER}, #{empNo,jdbcType=INTEGER}, #{deptNo,jdbcType=INTEGER},
+                #{refuseReason,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.pace2car.bean.Train" useGeneratedKeys="true" keyProperty="id">
+        insert into train
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="trainType != null">
+                train_type,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="budget != null">
+                budget,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="empNo != null">
+                emp_no,
+            </if>
+            <if test="deptNo != null">
+                dept_no,
+            </if>
+            <if test="refuseReason != null">
+                refuse_reason,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=DATE},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=DATE},
+            </if>
+            <if test="trainType != null">
+                #{trainType,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="budget != null">
+                #{budget,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="empNo != null">
+                #{empNo,jdbcType=INTEGER},
+            </if>
+            <if test="deptNo != null">
+                #{deptNo,jdbcType=INTEGER},
+            </if>
+            <if test="refuseReason != null">
+                #{refuseReason,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.Train">
+        update train
+        <set>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=DATE},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=DATE},
+            </if>
+            <if test="trainType != null">
+                train_type = #{trainType,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="budget != null">
+                budget = #{budget,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="empNo != null">
+                emp_no = #{empNo,jdbcType=INTEGER},
+            </if>
+            <if test="deptNo != null">
+                dept_no = #{deptNo,jdbcType=INTEGER},
+            </if>
+            <if test="refuseReason != null">
+                refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.Train">
+        update train
+        set subject       = #{subject,jdbcType=VARCHAR},
+            start_time    = #{startTime,jdbcType=DATE},
+            end_time      = #{endTime,jdbcType=DATE},
+            train_type    = #{trainType,jdbcType=INTEGER},
+            description   = #{description,jdbcType=VARCHAR},
+            budget        = #{budget,jdbcType=DOUBLE},
+            status        = #{status,jdbcType=INTEGER},
+            emp_no        = #{empNo,jdbcType=INTEGER},
+            dept_no       = #{deptNo,jdbcType=INTEGER},
+            refuse_reason = #{refuseReason,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pace2car.dao.ResumeMapper">
+    <resultMap id="BaseResultMap" type="com.pace2car.bean.Resume">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="graduated_school" jdbcType="VARCHAR" property="graduatedSchool"/>
+        <result column="major" jdbcType="VARCHAR" property="major"/>
+        <result column="education" jdbcType="VARCHAR" property="education"/>
+        <result column="experience" jdbcType="VARCHAR" property="experience"/>
+        <result column="recruit_id" jdbcType="INTEGER" property="recruitId"/>
+        <result column="position_id" jdbcType="INTEGER" property="positionId"/>
+        <result column="phone_no" jdbcType="BIGINT" property="phoneNo"/>
+        <result column="result" jdbcType="INTEGER" property="result"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        name,
+        age,
+        gender,
+        graduated_school,
+        major,
+        education,
+        experience,
+        recruit_id,
+        position_id,
+        phone_no,
+        result,
+        status
+    </sql>
+    <select id="selectResumes" resultType="Resume" parameterType="Resume">
+        select
+            r.id               as id,
+            r.name             as name,
+            r.age              as age,
+            r.gender           as gender,
+            r.graduated_school as graduatedSchool,
+            r.major            as major,
+            r.education        as education,
+            r.experience       as experience,
+            r.recruit_id       as recruitId,
+            r.result           as result,
+            r.status           as status,
+            r.phone_no         as phoneNo,
+            p.pos_name         as posName
+        from resume r
+                 left join position p on r.position_id = p.id
+        where r.status = 0
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from resume
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from resume
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyProperty="id" parameterType="com.pace2car.bean.Resume" useGeneratedKeys="true">
+        insert into resume (name, age, gender,
+                            graduated_school, major, education,
+                            experience, recruit_id, position_id,
+                            phone_no, result, status)
+        values (#{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{gender,jdbcType=VARCHAR},
+                #{graduatedSchool,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},
+                #{experience,jdbcType=VARCHAR}, #{recruitId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER},
+                #{phoneNo,jdbcType=BIGINT}, #{result,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyProperty="id" parameterType="com.pace2car.bean.Resume" useGeneratedKeys="true">
+        insert into resume
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="graduatedSchool != null">
+                graduated_school,
+            </if>
+            <if test="major != null">
+                major,
+            </if>
+            <if test="education != null">
+                education,
+            </if>
+            <if test="experience != null">
+                experience,
+            </if>
+            <if test="recruitId != null">
+                recruit_id,
+            </if>
+            <if test="positionId != null">
+                position_id,
+            </if>
+            <if test="phoneNo != null">
+                phone_no,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="graduatedSchool != null">
+                #{graduatedSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="experience != null">
+                #{experience,jdbcType=VARCHAR},
+            </if>
+            <if test="recruitId != null">
+                #{recruitId,jdbcType=INTEGER},
+            </if>
+            <if test="positionId != null">
+                #{positionId,jdbcType=INTEGER},
+            </if>
+            <if test="phoneNo != null">
+                #{phoneNo,jdbcType=BIGINT},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.Resume">
+        update resume
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="graduatedSchool != null">
+                graduated_school = #{graduatedSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                major = #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                education = #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="experience != null">
+                experience = #{experience,jdbcType=VARCHAR},
+            </if>
+            <if test="recruitId != null">
+                recruit_id = #{recruitId,jdbcType=INTEGER},
+            </if>
+            <if test="positionId != null">
+                position_id = #{positionId,jdbcType=INTEGER},
+            </if>
+            <if test="phoneNo != null">
+                phone_no = #{phoneNo,jdbcType=BIGINT},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.Resume">
+        update resume
+        set name             = #{name,jdbcType=VARCHAR},
+            age              = #{age,jdbcType=INTEGER},
+            gender           = #{gender,jdbcType=VARCHAR},
+            graduated_school = #{graduatedSchool,jdbcType=VARCHAR},
+            major            = #{major,jdbcType=VARCHAR},
+            education        = #{education,jdbcType=VARCHAR},
+            experience       = #{experience,jdbcType=VARCHAR},
+            recruit_id       = #{recruitId,jdbcType=INTEGER},
+            position_id      = #{positionId,jdbcType=INTEGER},
+            phone_no         = #{phoneNo,jdbcType=BIGINT},
+            result           = #{result,jdbcType=INTEGER},
+            status           = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

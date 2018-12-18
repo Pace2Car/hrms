@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pace2car.dao.AppraiseMapper">
+    <resultMap id="BaseResultMap" type="com.pace2car.bean.Appraise">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="emp_no" property="empNo" jdbcType="INTEGER"/>
+        <result column="app_date" property="appDate" jdbcType="TIMESTAMP"/>
+        <result column="app_status" property="appStatus" jdbcType="INTEGER"/>
+        <result column="app_result" property="appResult" jdbcType="VARCHAR"/>
+        <result column="app_content" property="appContent" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        emp_no,
+        app_date,
+        app_status,
+        app_result,
+        app_content,
+        remark
+    </sql>
+    <select id="selectAppraises" resultType="Appraise" parameterType="Appraise">
+        select
+            a.id as id,
+            a.emp_no as empNo,
+            a.app_date as appDate,
+            a.app_status as appStatus,
+            a.app_result as appResult,
+            a.app_content as appContent,
+            a.remark as remark,
+            e.emp_name as empName
+        from appraise a
+        left join employee e on a.emp_no = e.emp_no
+
+    </select>
+    <select id="selectByPrimaryKey" resultType="Appraise" parameterType="java.lang.Integer">
+        select
+            a.id as id,
+            a.emp_no as empNo,
+            a.app_date as appDate,
+            a.app_status as appStatus,
+            a.app_result as appResult,
+            a.app_content as appContent,
+            a.remark as remark,
+            e.emp_name as empName
+        from appraise a
+        left join employee e on a.emp_no = e.emp_no
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from appraise
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.pace2car.bean.Appraise" useGeneratedKeys="true" keyProperty="id">
+        insert into appraise (emp_no, app_date, app_status,
+                              app_result, app_content, remark)
+        values (#{empNo,jdbcType=INTEGER}, #{appDate,jdbcType=TIMESTAMP}, #{appStatus,jdbcType=INTEGER},
+                #{appResult,jdbcType=VARCHAR}, #{appContent,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.pace2car.bean.Appraise" useGeneratedKeys="true" keyProperty="id">
+        insert into appraise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="empNo != null">
+                emp_no,
+            </if>
+            <if test="appDate != null">
+                app_date,
+            </if>
+            <if test="appStatus != null">
+                app_status,
+            </if>
+            <if test="appResult != null">
+                app_result,
+            </if>
+            <if test="appContent != null">
+                app_content,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="empNo != null">
+                #{empNo,jdbcType=INTEGER},
+            </if>
+            <if test="appDate != null">
+                #{appDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="appStatus != null">
+                #{appStatus,jdbcType=INTEGER},
+            </if>
+            <if test="appResult != null">
+                #{appResult,jdbcType=VARCHAR},
+            </if>
+            <if test="appContent != null">
+                #{appContent,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.Appraise">
+        update appraise
+        <set>
+            <if test="empNo != null">
+                emp_no = #{empNo,jdbcType=INTEGER},
+            </if>
+            <if test="appDate != null">
+                app_date = #{appDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="appStatus != null">
+                app_status = #{appStatus,jdbcType=INTEGER},
+            </if>
+            <if test="appResult != null">
+                app_result = #{appResult,jdbcType=VARCHAR},
+            </if>
+            <if test="appContent != null">
+                app_content = #{appContent,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.Appraise">
+        update appraise
+        set emp_no      = #{empNo,jdbcType=INTEGER},
+            app_date    = #{appDate,jdbcType=TIMESTAMP},
+            app_status  = #{appStatus,jdbcType=INTEGER},
+            app_result  = #{appResult,jdbcType=VARCHAR},
+            app_content = #{appContent,jdbcType=VARCHAR},
+            remark      = #{remark,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
