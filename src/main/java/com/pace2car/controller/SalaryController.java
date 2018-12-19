@@ -3,7 +3,7 @@ package com.pace2car.controller;
 import com.pace2car.bean.Adjustsalary;
 import com.pace2car.bean.BonusMulctRecord;
 import com.pace2car.bean.Employee;
-import com.pace2car.bean.User;
+import com.pace2car.shiro.bean.User;
 import com.pace2car.service.AdjustsalaryService;
 import com.pace2car.service.BonusMulctRecordService;
 import com.pace2car.service.EmployeeService;

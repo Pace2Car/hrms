@@ -1,4 +1,4 @@
-package com.pace2car.bean;
+package com.pace2car.shiro.bean;
 
 import java.io.Serializable;
 

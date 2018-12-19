@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pace2car.shiro.dao.RoleMapper" >
-  <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.Role" >
+<mapper namespace="com.pace2car.shiro.dao.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.Permission" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name
+    id, url, name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from role
+    from permission
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from role
+    delete from permission
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pace2car.shiro.bean.Role" useGeneratedKeys="true" keyProperty="id" >
-    insert into role (name)
-    values (#{name,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.pace2car.shiro.bean.Permission" useGeneratedKeys="true" keyProperty="id" >
+    insert into permission (url, name)
+    values (#{url,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pace2car.shiro.bean.Role" useGeneratedKeys="true" keyProperty="id" >
-    insert into role
+  <insert id="insertSelective" parameterType="com.pace2car.shiro.bean.Permission" useGeneratedKeys="true" keyProperty="id" >
+    insert into permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="url != null" >
+        url,
+      </if>
       <if test="name != null" >
         name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.shiro.bean.Role" >
-    update role
+  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.shiro.bean.Permission" >
+    update permission
     <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pace2car.shiro.bean.Role" >
-    update role
-    set name = #{name,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.pace2car.shiro.bean.Permission" >
+    update permission
+    set url = #{url,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

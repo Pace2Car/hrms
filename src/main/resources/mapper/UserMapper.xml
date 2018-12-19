@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pace2car.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.pace2car.bean.User">
+<mapper namespace="com.pace2car.shiro.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -36,7 +36,7 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyProperty="id" parameterType="com.pace2car.bean.User" useGeneratedKeys="true">
+  <insert id="insert" keyProperty="id" parameterType="com.pace2car.shiro.bean.User" useGeneratedKeys="true">
     insert into user (username, password, emp_no, 
       create_time, last_login_time, status
       )
@@ -44,7 +44,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT}
       )
   </insert>
-  <insert id="insertSelective" keyProperty="id" parameterType="com.pace2car.bean.User" useGeneratedKeys="true">
+  <insert id="insertSelective" keyProperty="id" parameterType="com.pace2car.shiro.bean.User" useGeneratedKeys="true">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.shiro.bean.User">
     update user
     <set>
       <if test="username != null">
@@ -111,7 +111,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.User">
+  <update id="updateByPrimaryKey" parameterType="com.pace2car.shiro.bean.User">
     update user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},

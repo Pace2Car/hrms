@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pace2car.dao.UserRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.pace2car.bean.UserRole" >
+<mapper namespace="com.pace2car.shiro.dao.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.UserRole" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="rid" property="rid" jdbcType="INTEGER" />
@@ -19,11 +19,11 @@
     delete from user_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pace2car.bean.UserRole" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.pace2car.shiro.bean.UserRole" useGeneratedKeys="true" keyProperty="id" >
     insert into user_role (uid, rid)
     values (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.pace2car.bean.UserRole" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="com.pace2car.shiro.bean.UserRole" useGeneratedKeys="true" keyProperty="id" >
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uid != null" >
@@ -42,7 +42,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.bean.UserRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.shiro.bean.UserRole" >
     update user_role
     <set >
       <if test="uid != null" >
@@ -54,7 +54,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pace2car.bean.UserRole" >
+  <update id="updateByPrimaryKey" parameterType="com.pace2car.shiro.bean.UserRole" >
     update user_role
     set uid = #{uid,jdbcType=INTEGER},
       rid = #{rid,jdbcType=INTEGER}

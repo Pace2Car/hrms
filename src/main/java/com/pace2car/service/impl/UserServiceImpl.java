@@ -1,7 +1,7 @@
 package com.pace2car.service.impl;
 
-import com.pace2car.bean.User;
-import com.pace2car.dao.UserMapper;
+import com.pace2car.shiro.bean.User;
+import com.pace2car.shiro.dao.UserMapper;
 import com.pace2car.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;

@@ -23,7 +23,7 @@
                         password="123456" />
 
         <!-- 指定javaBean生成的位置 -->
-        <javaModelGenerator targetPackage="com.pace2car.bean" targetProject="src/main/java" >
+        <javaModelGenerator targetPackage="com.pace2car.shiro.bean" targetProject="src/main/java" >
             <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
             <property name="enableSubPackages" value="true" />
             <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
@@ -34,7 +34,7 @@
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
         <!-- 指定dao接口生成的位置，mapper接口 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.pace2car.dao" targetProject="src/main/java" >
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.pace2car.shiro.dao" targetProject="src/main/java" >
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
@@ -68,7 +68,7 @@
             <!--&lt;!&ndash; 数据库表主键 &ndash;&gt;-->
             <!--<generatedKey column="contract_no" sqlStatement="JDBC" identity="true" />-->
         <!--</table>-->
-        <!--<table tableName="menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--<table tableName="permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
             <!--<property name="constructorBased" value="false" />-->
             <!--&lt;!&ndash; 数据库表主键 &ndash;&gt;-->
             <!--<generatedKey column="id" sqlStatement="JDBC" identity="true" />-->
@@ -83,7 +83,7 @@
             <!--&lt;!&ndash; 数据库表主键 &ndash;&gt;-->
             <!--<generatedKey column="id" sqlStatement="JDBC" identity="true" />-->
         <!--</table>-->
-        <!--<table tableName="role_menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--<table tableName="role_permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
             <!--<property name="constructorBased" value="false" />-->
             <!--&lt;!&ndash; 数据库表主键 &ndash;&gt;-->
             <!--<generatedKey column="id" sqlStatement="JDBC" identity="true" />-->

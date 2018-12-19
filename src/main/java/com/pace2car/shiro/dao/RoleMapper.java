@@ -1,6 +1,6 @@
-package com.pace2car.dao;
+package com.pace2car.shiro.dao;
 
-import com.pace2car.bean.Role;
+import com.pace2car.shiro.bean.Role;
 import org.springframework.stereotype.Repository;
 
 @Repository

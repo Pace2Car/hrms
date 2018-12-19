@@ -1,19 +1,17 @@
-package com.pace2car.bean;
+package com.pace2car.shiro.bean;
 
-import java.io.Serializable;
-
-public class Menu implements Serializable {
-    private Long id;
+public class Permission {
+    private Integer id;
 
     private String url;
 
     private String name;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

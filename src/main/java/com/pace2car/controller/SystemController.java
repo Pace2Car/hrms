@@ -1,6 +1,6 @@
 package com.pace2car.controller;
 
-import com.pace2car.bean.User;
+import com.pace2car.shiro.bean.User;
 import com.pace2car.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

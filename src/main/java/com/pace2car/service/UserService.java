@@ -1,6 +1,6 @@
 package com.pace2car.service;
 
-import com.pace2car.bean.User;
+import com.pace2car.shiro.bean.User;
 
 import java.util.List;
 

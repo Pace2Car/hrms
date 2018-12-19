@@ -1,8 +1,6 @@
-package com.pace2car.bean;
+package com.pace2car.shiro.bean;
 
-import java.io.Serializable;
-
-public class RoleMenu implements Serializable {
+public class RolePermission {
     private Integer id;
 
     private Integer rid;
