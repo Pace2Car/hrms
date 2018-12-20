@@ -8,20 +8,12 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!-- 引入shiro配置 -->
+    <import resource="spring-shiro.xml"/>
+
     <!-- 对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
     <context:component-scan base-package="com.pace2car.controller"/>
 
-    <!-- 支持spring3.0+ 新的mvc注解,不加有些注解功能不行，如json转换的@ResponseBody
-         <context:annotation-config/>
-          将隐式地向 Spring 容器注册
-    1. AutowiredAnnotationBeanPostProcessor
-    2. CommonAnnotationBeanPostProcessor
-    3. PersistenceAnnotationBeanPostProcessor
-    4. RequiredAnnotationBeanPostProcessor
-         这 4 个 BeanPostProcessor。
-
-         enable-matrix-variables="true"
-    -->
     <mvc:annotation-driven>
         <mvc:async-support default-timeout="10"/><!--子元素可指定异步拦截器-->
     </mvc:annotation-driven>
@@ -31,29 +23,9 @@
     -->
     <mvc:default-servlet-handler/>
 
-    <!-- 配置拦截器 -->
-    <!--<mvc:interceptors>-->
-        <!--<bean class="com.pace2car.interceptor.GlobalInterceptor"/>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/*/**"/>-->
-            <!--&lt;!&ndash; 此路径的请求不拦截 &ndash;&gt;-->
-            <!--<mvc:exclude-mapping path="/user/**"/>-->
-            <!--<mvc:exclude-mapping path="/examManage/**"/>-->
-            <!--<mvc:exclude-mapping path="/js/**"/>-->
-            <!--<mvc:exclude-mapping path="/vendor/**"/>-->
-            <!--<mvc:exclude-mapping path="/skin-config.html"/>-->
-            <!--<bean class="com.pace2car.interceptor.AuthenticationInterceptor" />-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
 
 
-    <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀
-    Xxxcontroller.login(){
-        return "success"; //spring mvc 解析为一个对应的jsp（视图）/views/success.jsp
-    }
-
-    p:prefix="/views/" p:suffix=".jsp"
-    -->
+    <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/views/" p:suffix=".jsp">
         <!-- 与p:prefix, p:suffix 等价

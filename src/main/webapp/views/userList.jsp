@@ -59,8 +59,8 @@
         <!-- main 主体区域 -->
         <div class="wrapper wrapper-content animated fadeIn">
             <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
                     <!-- main 在此显示内容 -->
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -92,10 +92,11 @@
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="员工编号: activate to sort column descending" style="width: 238px;" aria-sort="ascending">员工编号</th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="用户名: activate to sort column ascending" style="width: 417px;">用户名</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="用户名: activate to sort column ascending" style="width: 217px;">用户名</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="角色: activate to sort column ascending" style="width: 317px;">角色</th>
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="创建时间: activate to sort column ascending" style="width: 417px;">创建时间</th>
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="最后登录时间: activate to sort column ascending" style="width: 417px;">最后登录时间</th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="操作: activate to sort column ascending" style="width: 377px;">操作</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="操作: activate to sort column ascending" style="width: 300px;">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tbody">
@@ -103,13 +104,26 @@
                                         <tr id="tr_${user.id}" class="gradeA odd" role="row">
                                             <td class="sorting_1">${user.empNo}</td>
                                             <td>${user.username}</td>
+                                            <td>${user.roleName}</td>
                                             <td><fmt:formatDate value="${user.createTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                                             <td><fmt:formatDate value="${user.lastLoginTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                                             <td class="center">
                                                 <a href="#" userId="${user.id}" onclick="toUpdate(this)"
-                                                   class="btn btn-info btn-sm" data-toggle="modal"
+                                                   class="btn btn-success btn-sm" data-toggle="modal"
                                                    data-target="#updateModal" data-backdrop="static">
-                                                    <span class="glyphicon glyphicon-search"></span> 详细信息</a>
+                                                    <span class="glyphicon glyphicon-search"></span> 更改角色</a>
+                                                <c:if test="${!user.status}">
+                                                    <a id="td_${user.id}_0" href="#" userId="${user.id}" onclick="toAllow(this)"
+                                                       class="btn btn-info btn-sm" data-toggle="modal">
+                                                        <span class="glyphicon glyphicon-refresh"></span> 允许登录</a>
+                                                </c:if>
+                                                <c:if test="${user.status}">
+                                                    <a id="td_${user.id}_1" href="#" userId="${user.id}" userName="${user.username}" onclick="toBan(this)"
+                                                       class="btn btn-danger btn-sm" data-toggle="modal"
+                                                       data-target="#deleteModal" data-backdrop="static">
+                                                        <span class="glyphicon glyphicon-ban-circle"></span> 禁止登录</a>
+                                                </c:if>
+
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -118,6 +132,7 @@
                                     <tr>
                                         <th rowspan="1" colspan="1">员工编号</th>
                                         <th rowspan="1" colspan="1">用户名</th>
+                                        <th rowspan="1" colspan="1">角色</th>
                                         <th rowspan="1" colspan="1">创建时间</th>
                                         <th rowspan="1" colspan="1">最后登录时间</th>
                                         <th rowspan="1" colspan="1">操作</th>
@@ -128,7 +143,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2"></div>
+                <div class="col-lg-1"></div>
             </div>
         </div>
         <!-- footer 底部包装区域 -->
@@ -214,25 +229,22 @@
                     <div class="form-inline">
                         <div class="form-group">
                             <div class="input-group input-group-md">
-                                <div class="input-group-addon" style="width: 110px">部门名称：</div>
-                                <select name="deptNo" id="newDeptNo"
-                                        style="width: 300px"
-                                        class="form-control" placeholder="请选择部门"
-                                        aria-controls="editable">
-                                </select>
+                                <div class="input-group-addon" style="width: 110px;">用户名：</div>
+                                <input style="width: 300px" type="text" class="form-control" id="newUsername"
+                                       name="username" placeholder="默认密码：111111">
                             </div>
                             <br/><br/>
                             <div class="input-group input-group-md">
-                                <div class="input-group-addon" style="width: 110px;">员工名称：</div>
-                                <input style="width: 300px" type="text" class="form-control" id="newEmpName"
-                                       name="empName" placeholder="请输入员工姓名">
+                                <div class="input-group-addon" style="width: 110px;">工号：</div>
+                                <input style="width: 300px" type="number" class="form-control" id="newEmpNo"
+                                       name="empNo" placeholder="请输入员工工号" min="0" />
                             </div>
                             <br/><br/>
                             <div class="input-group input-group-md">
-                                <div class="input-group-addon" style="width: 110px">职务：</div>
-                                <select name="positionId" id="newPositionId"
+                                <div class="input-group-addon" style="width: 110px">角色：</div>
+                                <select name="rid" id="newRid"
                                         style="width: 300px"
-                                        class="form-control" placeholder="请选择职位"
+                                        class="form-control"
                                         aria-controls="editable">
                                 </select>
                             </div>
@@ -257,6 +269,27 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<!-- 删除模态框 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel"> 禁止确认 </h4>
+            </div>
+            <div class="modal-body">
+                <span class="fa fa-exclamation fa-2x" style="color:#f15b6c;"></span>
+                您确定禁止：<strong><span id="userMsg"></span></strong> 登录系统吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="deleteConfirmBtn" type="button" class="btn btn-primary">禁止</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <%--成功提示模态框--%>
 <div id="successAlert" class="alert alert-success col-md-2"
      style="margin-right: 5px;position: fixed; right: 10px; bottom: 30px;">
@@ -278,38 +311,28 @@
 
     function toUpdate(e) {
         $("#updateModal-content").empty();
-        var empNo = $(e).attr('empNo');
-        console.dirxml(empNo);
-        $.get("employee/searchEmployee?empNo=" + empNo, function (html) {
+        var userId = $(e).attr('userId');
+        console.dirxml(userId);
+        $.get("system/searchUser?id=" + userId, function (html) {
             $("#updateModal-content").append(html);
         }, "html");
     }
 
     function toInsert() {
         // 加载部门名下拉列表
-        $.get("department/load_depts",function (resp) {
+        $.get("system/load_roles",function (resp) {
             // console.log(resp);
-            $("#newDeptNo").empty();
-            // $("#newDeptNo").append("<option value=''>不限--</option>");
+            $("#newRid").empty();
+            // $("#newRid").append("<option value=''>-不限-</option>");
             $.each(resp, function (i,v) {
-                var option = new Option(v.deptName, v.deptNo);
-                $("#newDeptNo").append(option);
-            });
-        },"json");
-        // 加载职位名下拉列表
-        $.get("position/load_posis",function (resp) {
-            // console.log(resp);
-            $("#newPositionId").empty();
-            // $("#newDeptNo").append("<option value=''>不限--</option>");
-            $.each(resp, function (i,v) {
-                var option = new Option(v.posName, v.positionId);
-                $("#newPositionId").append(option);
+                var option = new Option(v.name, v.id);
+                $("#newRid").append(option);
             });
         },"json");
         $("#insertBtn").click(function () {
-            console.dirxml($("#empName").val());
-            var employee = $("#insertForm").serialize();
-            $.get("employee/insertEmployee", employee, function (json) {
+            console.dirxml($("#username").val());
+            var user = $("#insertForm").serialize();
+            $.post("system/insertUser", user, function (json) {
                 if (json.actionFlag) {
                     $('#successAlert').slideDown();
                     setTimeout("$('#successAlert').fadeOut()", 3000);
@@ -322,6 +345,38 @@
             }, "json");
             return false;
         });
+    }
+    function toBan(e) {
+        var userId = $(e).attr('userId');
+        var userName = $(e).attr('userName');
+        $("#userMsg").text(userName);
+        $("#deleteConfirmBtn").click(function () {
+            $('#deleteModal').modal('hide');
+            $.get("system/editStatusUser?id=" + userId, function (json) {
+                if (json.actionFlag) {
+                    $('#successAlert').slideDown();
+                    setTimeout("$('#successAlert').fadeOut()", 3000);
+                    setTimeout("location.replace('system/searchUser')", 200);
+                } else {
+                    $('#failAlert').slideDown();
+                    setTimeout("$('#failAlert').fadeOut()", 3000);
+                }
+            }, "json");
+        });
+    }
+
+    function toAllow(e) {
+        var userId = $(e).attr('userId');
+        $.get("system/editStatusUser?id=" + userId, function (json) {
+            if (json.actionFlag) {
+                $('#successAlert').slideDown();
+                setTimeout("$('#successAlert').fadeOut()", 3000);
+                setTimeout("location.replace('system/searchUser')", 200);
+            } else {
+                $('#failAlert').slideDown();
+                setTimeout("$('#failAlert').fadeOut()", 3000);
+            }
+        }, "json");
     }
 </script>
 

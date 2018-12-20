@@ -3,11 +3,14 @@ package com.pace2car.controller;
 import com.pace2car.bean.Adjustsalary;
 import com.pace2car.bean.BonusMulctRecord;
 import com.pace2car.bean.Employee;
+import com.pace2car.shiro.anno.PermissionName;
 import com.pace2car.shiro.bean.User;
 import com.pace2car.service.AdjustsalaryService;
 import com.pace2car.service.BonusMulctRecordService;
 import com.pace2car.service.EmployeeService;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,6 +46,8 @@ public class SalaryController {
     private BonusMulctRecordService bonusMulctRecordService;
 
     @RequestMapping("/searchEmpSalary")
+    @RequiresPermissions("employee:select")
+    @PermissionName("查询员工")
     public String searchEmpSalary(Employee employee, ModelMap modelMap, HttpSession session) {
         List<Employee> employees = null;
         if (employee != null && employee.getEmpNo() != null) {
@@ -60,6 +65,8 @@ public class SalaryController {
     }
 
     @RequestMapping("/updateEmpSalary")
+    @RequiresPermissions("employee:update")
+    @PermissionName("更新员工")
     public void updateEmpSalary(Adjustsalary adjustsalary, HttpServletResponse response, HttpSession session) {
         Employee oldEmployee = (Employee) session.getAttribute("oldEmployee");
         logger.info(oldEmployee.getBaseSalary());
@@ -79,6 +86,8 @@ public class SalaryController {
     }
 
     @RequestMapping("/searchEmpBM")
+    @RequiresPermissions("employee:select")
+    @PermissionName("查询员工")
     public String searchEmpBM(Employee employee, ModelMap modelMap, HttpSession session) {
         List<Employee> employees = null;
         if (employee != null && employee.getEmpNo() != null) {
@@ -96,6 +105,8 @@ public class SalaryController {
     }
 
     @RequestMapping("/updateEmpBM")
+    @RequiresPermissions("employee:update")
+    @PermissionName("更新员工")
     public void updateEmpBM(BonusMulctRecord bonusMulctRecord, HttpServletResponse response, HttpSession session) {
         Employee oldEmployee = (Employee) session.getAttribute("oldEmployee");
         logger.info(oldEmployee.getEmpNo());
@@ -120,19 +131,19 @@ public class SalaryController {
     }
 
     @RequestMapping("/cheakMySalary")
-    public String cheakMySalary(ModelMap modelMap, HttpSession session) {
-        getMySalary(modelMap, session);
+    public String cheakMySalary(ModelMap modelMap) {
+        getMySalary(modelMap);
         return "mySalary";
     }
 
     @RequestMapping("/printMySalary")
-    public String printMySalary(ModelMap modelMap, HttpSession session) {
-        getMySalary(modelMap, session);
+    public String printMySalary(ModelMap modelMap) {
+        getMySalary(modelMap);
         return "mySalary_print";
     }
 
-    private void getMySalary(ModelMap modelMap, HttpSession session) {
-        User logUser = (User) session.getAttribute("logUser");
+    private void getMySalary(ModelMap modelMap) {
+        User logUser = (User) SecurityUtils.getSubject().getPrincipal();
         logger.info(logUser.getEmpNo());
         Employee mySalary = employeeService.selectSalByPrimaryKey(logUser.getEmpNo());
         modelMap.addAttribute("mySalary", mySalary);
@@ -142,28 +153,32 @@ public class SalaryController {
         socialSecurity = (double) Math.round(socialSecurity * 100) / 100;
         double taxSalary = totalSal - socialSecurity - 5000;
         double tax = taxSalary < 0 ? 0.0 :
-                taxSalary <= 1500 ? 0.03 * taxSalary :
-                        taxSalary <= 4500 ? taxSalary * 0.1 - 105 :
-                                taxSalary <= 9000 ? taxSalary * 0.2 - 555 :
-                                        taxSalary <= 35000 ? taxSalary * 0.25 - 1005 :
-                                                taxSalary <= 55000 ? taxSalary * 0.3 - 2755 :
-                                                        taxSalary <= 80000 ? taxSalary * 0.35 - 5505 :
-                                                                taxSalary * 0.45 - 13505;
+                taxSalary <= 3000 ? 0.03 * taxSalary :
+                        taxSalary <= 12000 ? taxSalary * 0.1 - 210 :
+                                taxSalary <= 25000 ? taxSalary * 0.2 - 1410 :
+                                        taxSalary <= 35000 ? taxSalary * 0.25 - 2660 :
+                                                taxSalary <= 55000 ? taxSalary * 0.3 - 4410 :
+                                                        taxSalary <= 80000 ? taxSalary * 0.35 - 7160 :
+                                                                taxSalary * 0.45 - 15160;
         tax = (double) Math.round(tax * 100) / 100;
         modelMap.addAttribute("tax", tax);
         modelMap.addAttribute("socialSecurity", socialSecurity);
     }
 
     @RequestMapping("/getSalChart")
+    @RequiresPermissions("employee:select")
+    @PermissionName("查询员工")
     public String getSalChart() {
         return "salaryChart";
     }
 
     @RequestMapping("/statistics")
     @ResponseBody
+    @RequiresPermissions("employee:select")
+    @PermissionName("查询员工")
     public Map<String, Integer> payrollStat(Employee employee) {
         List<Employee> salList = employeeService.selectSalByDeptNo(employee);
-        Map salDistributed = new HashMap<String, Integer>(5);
+        Map<String, Integer> salDistributed = new HashMap<>(5);
         int level1 = 0, level2 = 0, level3 = 0, level4 = 0, level5 = 0, level6 = 0;
         for (Employee empSal : salList) {
             double sal = empSal.getBaseSalary();

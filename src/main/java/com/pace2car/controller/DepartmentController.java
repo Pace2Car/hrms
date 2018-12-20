@@ -2,7 +2,9 @@ package com.pace2car.controller;
 
 import com.pace2car.bean.Department;
 import com.pace2car.service.DepartmentService;
+import com.pace2car.shiro.anno.PermissionName;
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,6 +38,8 @@ public class DepartmentController {
     }
 
     @RequestMapping("/searchDepartment")
+    @RequiresPermissions("department:select")
+    @PermissionName("查询部门")
     public String searchEmployee(Department department, ModelMap modelMap, HttpSession session) {
         List<Department> departments = null;
         if (department != null && department.getDeptNo() != null) {
@@ -52,6 +56,8 @@ public class DepartmentController {
     }
 
     @RequestMapping("/insertDepartment")
+    @RequiresPermissions("department:insert")
+    @PermissionName("新增部门")
     public void insertEmployee(Department department, HttpServletResponse response) {
         logger.info("insert department -> name : " + department.getDeptName());
         try {
@@ -67,6 +73,8 @@ public class DepartmentController {
     }
 
     @RequestMapping("/deleteDepartment")
+    @RequiresPermissions("department:delete")
+    @PermissionName("删除部门")
     public void deleteEmployee(Department department, HttpServletResponse response) {
         logger.info("delete department -> name : " + department.getDeptNo());
         try {
@@ -81,6 +89,8 @@ public class DepartmentController {
     }
 
     @RequestMapping("/updateDepartment")
+    @RequiresPermissions("department:update")
+    @PermissionName("更新部门")
     public void updateEmployee(Department department, HttpServletResponse response) {
         logger.info("update department -> name : " + department.getDeptName());
         try {

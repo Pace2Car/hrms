@@ -5,7 +5,7 @@ public class RolePermission {
 
     private Integer rid;
 
-    private Integer mid;
+    private Integer pid;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class RolePermission {
         this.rid = rid;
     }
 
-    public Integer getMid() {
-        return mid;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setMid(Integer mid) {
-        this.mid = mid;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 }

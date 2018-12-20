@@ -11,21 +11,16 @@
 ">
 
     <context:annotation-config />
-
+    <import resource="springmvc-servlet.xml" />
     <!-- 对service包中的所有类进行扫描，可以有多个包使用逗号分隔包名，以完成Bean创建和自动依赖注入的功能 -->
-    <context:component-scan base-package="com.pace2car.service" />
+    <context:component-scan base-package="com.pace2car.service,com.pace2car.shiro.service" />
 
-    <!-- 可以本配置文件中引用属性文件中的值
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations" value="classpath:jdbc.properties"/>
-	</bean>
-    -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <!-- 声明一个数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
-        <!-- 基本属性 url、user、password -->
+        <!-- 基本属性 url、role、password -->
         <property name="url" value="${jdbc.url}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
@@ -63,7 +58,7 @@
         <property name="mapperLocations" value="classpath*:dao/*.xml" />
 		 -->
         <property name="mapperLocations" value="classpath*:mapper/*.xml" />
-        <property name="typeAliasesPackage" value="com.pace2car.bean" />
+        <property name="typeAliasesPackage" value="com.pace2car.bean,com.pace2car.shiro.bean" />
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">
@@ -91,7 +86,7 @@
         扫描mybatis映射器接口，并将这此接口作成组件
     -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.pace2car.dao" />
+        <property name="basePackage" value="com.pace2car.dao,com.pace2car.shiro.dao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 

@@ -302,7 +302,7 @@
 <div class="intro-container">
 
     <h1>欢迎您！使用<br> 人力资源管理系统</h1>
-
+    <h4>${sessionScope.errorMsg}</h4>
     <div class="button shift-camera-button">
         <div class="border">
             <div class="left-plane"></div>
@@ -320,30 +320,30 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-5">
                 <form action="open/login" method="post" class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="input-group input-group-lg">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"
-                                                         style="color: #1e5cff"></span></div>
-                    <input style="width: 550px;" type="text" class="form-control" id="loginName" name="username" value="admin" placeholder="请输入用户名">
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <br>
-            <div class="form-group">
-                <div class="input-group input-group-lg">
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"
-                                                         style="color: firebrick;"></span></div>
-                    <input style="width: 550px;" type="password" class="form-control" id="password" name="password" value="admin" placeholder="请输入密码">
-                </div>
-            </div>
-            <br>
-            <div class="form-group">
-                <div style="width: 580px" class="text-center">
-                    <button type="submit" class="btn btn-primary btn-md login-btn-sumbit">&nbsp;登录&nbsp;</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-default btn-md login-btn-reset" onclick="location.href='register.jsp'">&nbsp;重置&nbsp;</button>
-                </div>
-            </div>
-        </form>
+                    <div class="form-group">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"
+                                                                 style="color: #1e5cff"></span></div>
+                            <input style="width: 550px;" type="text" class="form-control" id="loginName" name="username" value="admin" placeholder="请输入用户名">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <br>
+                    <div class="form-group">
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-lock"
+                                                                 style="color: firebrick;"></span></div>
+                            <input style="width: 550px;" type="password" class="form-control" id="password" name="password" value="admin" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <div style="width: 580px" class="text-center">
+                            <button type="submit" class="btn btn-primary btn-md login-btn-sumbit">&nbsp;登录&nbsp;</button>&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-default btn-md login-btn-reset">&nbsp;重置&nbsp;</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

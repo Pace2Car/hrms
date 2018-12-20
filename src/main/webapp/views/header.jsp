@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Haoge
@@ -19,7 +20,7 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <span class="m-r-sm text-muted welcome-message">欢迎您！ <strong>${sessionScope.logUser.username}</strong> 使用人力资源管理系统</span>
+                <span class="m-r-sm text-muted welcome-message">欢迎您！ <strong><shiro:principal property="username"/></strong> 使用人力资源管理系统</span>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">

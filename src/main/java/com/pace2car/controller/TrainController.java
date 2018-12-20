@@ -1,9 +1,13 @@
 package com.pace2car.controller;
 
 import com.pace2car.bean.Train;
+import com.pace2car.shiro.anno.PermissionName;
 import com.pace2car.shiro.bean.User;
 import com.pace2car.service.TrainService;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,11 +33,15 @@ public class TrainController {
     private TrainService trainService;
 
     @RequestMapping("/addTrain")
+    @RequiresPermissions("train:insert")
+    @PermissionName("新增培训")
     public String addTrain() {
         return "addTrain";
     }
 
     @RequestMapping("/insertTrain")
+    @RequiresPermissions("train:insert")
+    @PermissionName("新增培训")
     public void insertRecruit(Train train, HttpServletResponse response) {
         logger.info("insert train -> name : " + train.getSubject());
         try {
@@ -49,6 +57,8 @@ public class TrainController {
     }
 
     @RequestMapping("/searchTrain")
+    @RequiresPermissions("train:select")
+    @PermissionName("查询培训")
     public String searchResume(Train train, ModelMap modelMap, HttpSession session) {
         List<Train> trains = null;
         if (train != null && train.getId() != null) {
@@ -70,7 +80,7 @@ public class TrainController {
 
     @RequestMapping("/checkMyTrain")
     public String checkMyTrain(Train train, ModelMap modelMap, HttpSession session) {
-        User logUser = (User) session.getAttribute("logUser");
+        User logUser = (User) SecurityUtils.getSubject().getPrincipal();
         logger.info(logUser.getEmpNo());
         List<Train> trains = null;
         logger.info("search myTrains ...... ");
@@ -92,6 +102,8 @@ public class TrainController {
     }
 
     @RequestMapping("/updateTrain")
+    @RequiresPermissions("train:update")
+    @PermissionName("更新培训")
     public void updateTrain(Train train, HttpServletResponse response) {
         logger.info("update train -> name : " + train.getId());
         try {

@@ -3,14 +3,33 @@
 <mapper namespace="com.pace2car.shiro.dao.PermissionMapper" >
   <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.Permission" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="resource" property="resource" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, url, name
+    id, resource, name
   </sql>
+  <select id="selectAllPermissions" resultType="com.pace2car.shiro.bean.Permission" >
+    select
+    <include refid="Base_Column_List" />
+    from permission p
+    order by p.resource
+  </select>
+  <select id="selectAllResources" resultType="java.lang.String" >
+    select
+      p.resource
+    from permission p
+  </select>
+  <select id="selectAllResourcesByRole" resultType="java.lang.String" >
+    select
+      p.resource
+    from permission p,role r,role_permission rp
+    where r.id = rp.rid and
+          p.id = rp.pid and
+          r.short_name = #{shortName,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from permission
     where id = #{id,jdbcType=INTEGER}
@@ -20,22 +39,22 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.pace2car.shiro.bean.Permission" useGeneratedKeys="true" keyProperty="id" >
-    insert into permission (url, name)
-    values (#{url,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+    insert into permission (resource, name)
+    values (#{resource,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pace2car.shiro.bean.Permission" useGeneratedKeys="true" keyProperty="id" >
     insert into permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="url != null" >
-        url,
+      <if test="resource != null" >
+        resource,
       </if>
       <if test="name != null" >
         name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
+      <if test="resource != null" >
+        #{resource,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -45,8 +64,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.shiro.bean.Permission" >
     update permission
     <set >
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
+      <if test="resource != null" >
+        resource = #{resource,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -56,7 +75,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pace2car.shiro.bean.Permission" >
     update permission
-    set url = #{url,jdbcType=VARCHAR},
+    set resource = #{resource,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

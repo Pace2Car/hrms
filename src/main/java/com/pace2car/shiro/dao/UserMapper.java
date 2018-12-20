@@ -10,10 +10,10 @@ public interface UserMapper {
 
     /**
      * 验证用户登录信息
-     * @param logUser
+     * @param username
      * @return
      */
-    User selectByLogin(User logUser);
+    User selectByUsername(String username);
 
     /**
      * 查询用户列表

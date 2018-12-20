@@ -1,11 +1,17 @@
 package com.pace2car.shiro.bean;
 
-import java.io.Serializable;
+import java.util.List;
 
-public class Role implements Serializable {
+public class Role {
     private Integer id;
 
     private String name;
+
+    private String shortName;
+
+    private List<Permission> permissions;
+
+    private List<Integer> permissionList;
 
     public Integer getId() {
         return id;
@@ -21,5 +27,29 @@ public class Role implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName == null ? null : shortName.trim();
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    public List<Integer> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Integer> permissionList) {
+        this.permissionList = permissionList;
     }
 }

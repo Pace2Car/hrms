@@ -18,6 +18,10 @@ public class User implements Serializable {
 
     private Boolean status;
 
+    private String roleName;
+
+    private Integer rid;
+
     public Integer getId() {
         return id;
     }
@@ -72,5 +76,21 @@ public class User implements Serializable {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Integer getRid() {
+        return rid;
+    }
+
+    public void setRid(Integer rid) {
+        this.rid = rid;
     }
 }

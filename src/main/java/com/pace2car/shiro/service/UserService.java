@@ -1,4 +1,4 @@
-package com.pace2car.service;
+package com.pace2car.shiro.service;
 
 import com.pace2car.shiro.bean.User;
 
@@ -11,10 +11,10 @@ import java.util.List;
 public interface UserService {
     /**
      * 验证用户登录信息
-     * @param logUser
+     * @param username
      * @return
      */
-    User selectByLogin(User logUser);
+    User selectByUsername(String username);
 
     /**
      * 查询用户列表

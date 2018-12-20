@@ -1,9 +1,21 @@
 package com.pace2car.shiro.dao;
 
 import com.pace2car.shiro.bean.RolePermission;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface RolePermissionMapper {
-    int deleteByPrimaryKey(Integer id);
+
+    /**
+     * 获取角色的权限Id List
+     * @param rid
+     * @return
+     */
+    List<RolePermission> selectPermissionsByRid(Integer rid);
+
+    int deleteByRid(Integer rid);
 
     int insert(RolePermission record);
 

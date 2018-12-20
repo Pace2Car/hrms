@@ -1,6 +1,8 @@
 package com.pace2car.bean;
 
-public class Resume {
+import java.io.Serializable;
+
+public class Resume implements Serializable {
     private Integer id;
 
     private String name;

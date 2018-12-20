@@ -4,7 +4,9 @@ import com.pace2car.bean.Appraise;
 import com.pace2car.bean.Attendance;
 import com.pace2car.service.AppraiseService;
 import com.pace2car.service.AttendanceService;
+import com.pace2car.shiro.anno.PermissionName;
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,6 +36,8 @@ public class AssessController {
     private AppraiseService appraiseService;
 
     @RequestMapping("/searchAttendance")
+    @RequiresPermissions("attendance:select")
+    @PermissionName("查询考勤")
     public String searchAttendance(Attendance attendance, ModelMap modelMap, HttpSession session) {
         List<Attendance> attendances = null;
         if (attendance != null && attendance.getEffectDate() == null && attendance.getEndDate() == null) {
@@ -57,6 +61,8 @@ public class AssessController {
     }
 
     @RequestMapping("/searchAppraise")
+    @RequiresPermissions("appraise:select")
+    @PermissionName("查询考核")
     public String searchAppraise(Appraise appraise, ModelMap modelMap, HttpSession session) {
         List<Appraise> appraises = null;
         if (appraise != null && appraise.getId() != null) {
@@ -73,6 +79,8 @@ public class AssessController {
     }
 
     @RequestMapping("/insertAppraise")
+    @RequiresPermissions("appraise:insert")
+    @PermissionName("新增考核")
     public void insertAppraise(Appraise appraise, HttpServletResponse response) {
         logger.info("insert appraise -> id : " + appraise.getId());
         appraise.setAppResult(appraise.getAppResult().toUpperCase());
@@ -89,6 +97,8 @@ public class AssessController {
     }
 
     @RequestMapping("/updateAppraise")
+    @RequiresPermissions("appraise:update")
+    @PermissionName("更新考核")
     public void updateAppraise(Appraise appraise, HttpServletResponse response) {
         logger.info("update appraise -> id : " + appraise.getId());
         appraise.setAppResult(appraise.getAppResult().toUpperCase());

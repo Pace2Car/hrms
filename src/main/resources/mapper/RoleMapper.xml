@@ -1,52 +1,101 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pace2car.shiro.dao.RoleMapper" >
-  <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.Role" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, name
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from role
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from role
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.pace2car.shiro.bean.Role" useGeneratedKeys="true" keyProperty="id" >
-    insert into role (name)
-    values (#{name,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.pace2car.shiro.bean.Role" useGeneratedKeys="true" keyProperty="id" >
-    insert into role
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="name != null" >
+<mapper namespace="com.pace2car.shiro.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.Role">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="short_name" property="shortName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="RolePermissionsMap" type="com.pace2car.shiro.bean.Role">
+        <id column="r_id" property="id" jdbcType="INTEGER"/>
+        <result column="r_name" property="name" jdbcType="VARCHAR"/>
+        <result column="r_shortName" property="shortName" jdbcType="VARCHAR"/>
+        <collection property="permissions" ofType="com.pace2car.shiro.bean.Permission">
+            <id column="p_id" property="id" jdbcType="INTEGER"/>
+            <result column="p_resource" property="resource" jdbcType="VARCHAR"/>
+            <result column="p_name" property="name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
         name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.shiro.bean.Role" >
-    update role
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.pace2car.shiro.bean.Role" >
-    update role
-    set name = #{name,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        short_name
+    </sql>
+    <select id="selectAllRoles" resultMap="RolePermissionsMap">
+        select
+            r.id as r_id,
+            r.name as r_name,
+            r.short_name as r_shortName,
+            p.id as p_id,
+            p.resource as p_resource,
+            p.name as p_name
+        from role r
+        left join role_permission rp on r.id = rp.rid
+        left join permission p on rp.pid = p.id
+        order by r.id desc
+    </select>
+    <select id="selectAllRolesByUsername" resultType="java.lang.String" parameterType="java.lang.String">
+        select
+            r.short_name
+        from role r,
+             user u,
+             user_role ur
+        where r.id = ur.rid
+          and
+            u.id = ur.uid
+          and
+            u.username = #{username,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from role
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from role
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.pace2car.shiro.bean.Role" useGeneratedKeys="true" keyProperty="id">
+        insert into role (name, short_name)
+        values (#{name,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.pace2car.shiro.bean.Role" useGeneratedKeys="true" keyProperty="id">
+        insert into role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="shortName != null">
+                short_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                #{shortName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pace2car.shiro.bean.Role">
+        update role
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                short_name = #{shortName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pace2car.shiro.bean.Role">
+        update role
+        set name       = #{name,jdbcType=VARCHAR},
+            short_name = #{shortName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

@@ -3,7 +3,7 @@ package com.pace2car.shiro.bean;
 public class Permission {
     private Integer id;
 
-    private String url;
+    private String resource;
 
     private String name;
 
@@ -15,12 +15,12 @@ public class Permission {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getResource() {
+        return resource;
     }
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+    public void setResource(String resource) {
+        this.resource = resource == null ? null : resource.trim();
     }
 
     public String getName() {

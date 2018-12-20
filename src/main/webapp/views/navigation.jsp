@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Haoge
@@ -20,8 +21,8 @@
                              </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
-                                    class="font-bold">${sessionScope.logUser.username}</strong>
-                             </span> <span class="text-muted text-xs block">超级管理员<b
+                                    class="font-bold"><shiro:principal property="username"/></strong>
+                             </span> <span class="text-muted text-xs block"><shiro:principal property="roleName" /><b
                                     class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="javascript:void(0)">个人主页</a></li>
@@ -47,9 +48,15 @@
                     <span class="nav-label">&nbsp;&nbsp;人事管理</span> <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level collapse">
+                    <shiro:hasPermission name="employee:select">
                     <li><a href="employee/searchEmployee">员工信息列表</a></li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="position:update">
                     <li><a href="position/searchEmpPosition">职位调动</a></li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="employee:delete">
                     <li><a href="employee/getWorkEmployeeList">离退职管理</a></li>
+                    </shiro:hasPermission>
                 </ul>
             </li>
             <li>
@@ -58,8 +65,12 @@
                     <span class="nav-label">&nbsp;部门管理</span> <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level collapse">
+                    <shiro:hasPermission name="department:select">
                     <li><a href="department/searchDepartment">部门信息列表</a></li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="department:update">
                     <li><a href="position/getPositionList">职位设置</a></li>
+                    </shiro:hasPermission>
                 </ul>
             </li>
             <li >
@@ -69,11 +80,16 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li><a href="salary/cheakMySalary">我的薪资</a></li>
+                    <shiro:hasPermission name="employee:update">
                     <li><a href="salary/searchEmpSalary">薪资调整</a></li>
                     <li><a href="salary/searchEmpBM">奖惩管理</a></li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="employee:select">
                     <li><a href="salary/getSalChart">薪资统计</a></li>
+                    </shiro:hasPermission>
                 </ul>
             </li>
+            <shiro:hasRole name="mgr">
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-whatsapp"></i>
@@ -85,9 +101,9 @@
                     <li><a href="recruit/searchResume">查看简历投递</a></li>
                     <li><a href="recruit/searchInterview">面试安排</a></li>
                 </ul>
-
             </li>
-            <li >
+            </shiro:hasRole>
+            <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-paperclip"></i>
                     <span class="nav-label">&nbsp;培训管理</span> <span class="fa arrow"></span>
@@ -95,10 +111,13 @@
                 <ul class="nav nav-second-level">
                     <li><a href="train/addTrain">申请培训</a></li>
                     <li><a href="train/checkMyTrain">我的个人培训</a></li>
+                    <shiro:hasRole name="mgr">
                     <li><a href="train/searchTrain">培训计划管理</a></li>
+                    </shiro:hasRole>
                 </ul>
             </li>
-            <li >
+            <shiro:hasRole name="hr">
+            <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-tags"></i>
                     <span class="nav-label">绩效考核</span> <span class="fa arrow"></span>
@@ -106,22 +125,22 @@
                 <ul class="nav nav-second-level">
                     <li><a href="assess/searchAttendance">考勤管理</a></li>
                     <li><a href="assess/searchAppraise">员工考核</a></li>
-                    <li><a href="assess/specialTreatment">特殊处理</a></li>
                 </ul>
             </li>
-            <li >
+            </shiro:hasRole>
+            <shiro:hasRole name="admin">
+            <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-cog"></i>
                     <span class="nav-label">系统管理</span> <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li><a href="system/searchUser">管理员设置</a></li>
                     <li><a href="system/searchUser">用户管理</a></li>
-                    <li><a href="system/searchUser">职能管理</a></li>
-                    <li><a href="system/searchUser">权限列表</a></li>
-                    <li><a href="system/searchUser">账户安全</a></li>
+                    <li><a href="system/searchRole">角色管理</a></li>
+                    <li><a href="system/reloadPermission">重新加载权限</a></li>
                 </ul>
             </li>
+            </shiro:hasRole>
         </ul>
     </div>
 </nav>

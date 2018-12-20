@@ -1,8 +1,8 @@
-package com.pace2car.service.impl;
+package com.pace2car.shiro.service.impl;
 
 import com.pace2car.shiro.bean.User;
 import com.pace2car.shiro.dao.UserMapper;
-import com.pace2car.service.UserService;
+import com.pace2car.shiro.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User selectByLogin(User logUser) {
-        return userMapper.selectByLogin(logUser);
+    public User selectByUsername(String username) {
+        return userMapper.selectByUsername(username);
     }
 
     @Override

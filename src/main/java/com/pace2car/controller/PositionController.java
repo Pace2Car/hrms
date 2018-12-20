@@ -4,7 +4,9 @@ import com.pace2car.bean.Employee;
 import com.pace2car.bean.Position;
 import com.pace2car.service.EmployeeService;
 import com.pace2car.service.PositionService;
+import com.pace2car.shiro.anno.PermissionName;
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,6 +43,8 @@ public class PositionController {
     }
 
     @RequestMapping("/searchEmpPosition")
+    @RequiresPermissions("employee:select")
+    @PermissionName("查询员工")
     public String searchEmpPosition(Employee employee, ModelMap modelMap, HttpSession session) {
         List<Employee> employees = null;
         if (employee != null && employee.getEmpNo() != null) {
@@ -57,6 +61,8 @@ public class PositionController {
     }
 
     @RequestMapping("/getPositionList")
+    @RequiresPermissions("position:select")
+    @PermissionName("查询职位")
     public String getPositionList(Position position, ModelMap modelMap, HttpSession session) {
         List<Position> positions = null;
         if (position != null && position.getId() != null) {
@@ -73,6 +79,8 @@ public class PositionController {
     }
 
     @RequestMapping("/insertPosition")
+    @RequiresPermissions("position:insert")
+    @PermissionName("新增职位")
     public void insertPosition(Position position, HttpServletResponse response) {
         logger.info("insert position -> name : " + position.getPosName());
         try {
@@ -88,6 +96,8 @@ public class PositionController {
     }
 
     @RequestMapping("/deletePosition")
+    @RequiresPermissions("position:delete")
+    @PermissionName("删除职位")
     public void deletePosition(Position position, HttpServletResponse response) {
         logger.info("delete position -> name : " + position.getId());
         try {
@@ -103,6 +113,8 @@ public class PositionController {
     }
 
     @RequestMapping("/updatePosition")
+    @RequiresPermissions("position:update")
+    @PermissionName("更新职位")
     public void updatePosition(Position position, HttpServletResponse response) {
         logger.info("update position -> name : " + position.getPosName());
         try {
