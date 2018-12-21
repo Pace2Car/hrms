@@ -3,6 +3,8 @@ package com.pace2car.bean;
 import java.io.Serializable;
 
 public class Resume implements Serializable {
+    private static final long serialVersionUID = -454873919224477077L;
+
     private Integer id;
 
     private String name;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pace2car.shiro.dao.UserMapper">
+    <cache eviction="LRU" type="com.pace2car.redis.RedisCache" />
     <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.User">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
@@ -19,7 +20,7 @@
         last_login_time,
         status
     </sql>
-    <select id="selectUsers" resultType="com.pace2car.shiro.bean.User" parameterType="com.pace2car.shiro.bean.User">
+    <select id="selectUsers" resultType="com.pace2car.shiro.bean.User" parameterType="com.pace2car.shiro.bean.User" useCache="true">
         select
             u.id as id,
             u.username as username,
@@ -33,7 +34,7 @@
                  left join user_role ur on u.id = ur.uid
                  left join role r on ur.rid = r.id
     </select>
-    <select id="selectByUsername" resultType="com.pace2car.shiro.bean.User" parameterType="java.lang.String">
+    <select id="selectByUsername" resultType="com.pace2car.shiro.bean.User" parameterType="java.lang.String" useCache="true">
         select
             u.id as id,
             u.username as username,
@@ -50,7 +51,7 @@
               u.status = 1 and
               u.username = #{username,jdbcType=VARCHAR}
     </select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.pace2car.shiro.bean.User">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.pace2car.shiro.bean.User" useCache="true">
         select
             u.id as id,
             u.username as username,

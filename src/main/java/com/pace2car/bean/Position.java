@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Position implements Serializable {
+    private static final long serialVersionUID = 3724156478973142015L;
+
     private Integer id;
 
     private String posName;

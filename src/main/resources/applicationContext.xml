@@ -3,7 +3,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
@@ -15,7 +15,15 @@
     <!-- 对service包中的所有类进行扫描，可以有多个包使用逗号分隔包名，以完成Bean创建和自动依赖注入的功能 -->
     <context:component-scan base-package="com.pace2car.service,com.pace2car.shiro.service" />
 
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!-- 引入数据库配置文件 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:redis.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <!-- 声明一个数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -47,6 +55,35 @@
         <property name="filters" value="stat,log4j" />
     </bean>
 
+    <!--redis连接池配置-->
+    <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig">
+        <!--最大空闲数-->
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <!--最大连接数-->
+        <property name="maxTotal" value="${redis.maxTotal}"/>
+        <!--最大建立连接等待时间-->
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+        <!--连接的最小空余时间-->
+        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>
+        <!--每次释放的最大数量-->
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"/>
+        <!--逐出扫描的时间间隔（毫秒）-->
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"/>
+        <!--是否在取出连接的时候进行检验，如果当前连接不可用，重新取出一个连接-->
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+        <!--在空闲时检查有效性, 默认false  -->
+        <property name="testWhileIdle" value="${redis.testWhileIdle}"/>
+    </bean>
+
+    <!-- Sprng-redis连接工厂 -->
+    <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" id="jedisConnectionFactory"
+          p:host-name="${redis.hostName}" p:port="${redis.port}" p:pool-config-ref="jedisPoolConfig"/>
+
+    <!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使MyBatis实现第三方缓存 -->
+    <bean class="com.pace2car.redis.RedisCacheTransfer" id="redisCacheTransfer">
+        <property name="jedisConnectionFactory" ref="jedisConnectionFactory" />
+    </bean>
+
 
     <!-- 声明mybatis SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -58,7 +95,18 @@
         <property name="mapperLocations" value="classpath*:dao/*.xml" />
 		 -->
         <property name="mapperLocations" value="classpath*:mapper/*.xml" />
-        <property name="typeAliasesPackage" value="com.pace2car.bean,com.pace2car.shiro.bean" />
+        <property name="typeAliasesPackage" value="com.pace2car.bean" />
+        <!--设置mybaits对redis缓存的支持-->
+        <property name="configurationProperties">
+            <props>
+                <!-- 全局映射器启用缓存 *主要将此属性设置完成即可-->
+                <prop key="cacheEnabled">true</prop>
+                <!-- 查询时，关闭关联对象即时加载以提高性能 -->
+                <prop key="lazyLoadingEnabled">false</prop>
+                <!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能 -->
+                <prop key="aggressiveLazyLoading">true</prop>
+            </props>
+        </property>
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageInterceptor">
@@ -79,7 +127,6 @@
                 </bean>
             </array>
         </property>
-
     </bean>
 
     <!-- Scan Mapper Interface Files
@@ -126,7 +173,5 @@
         <!--<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />-->
         <aop:advisor advice-ref="txAdvice" pointcut="execution(public * com.pace2car.service..*.*(..))" />
      </aop:config>
-
-
 
 </beans>

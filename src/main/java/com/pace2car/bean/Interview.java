@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Interview implements Serializable {
+    private static final long serialVersionUID = 4444952862358526456L;
+
     private Integer id;
 
     private String name;

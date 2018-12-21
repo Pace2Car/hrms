@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Attendance implements Serializable {
+    private static final long serialVersionUID = 1940624320141960980L;
+
     private Integer id;
 
     private Integer empNo;

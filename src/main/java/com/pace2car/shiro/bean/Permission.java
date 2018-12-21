@@ -1,6 +1,10 @@
 package com.pace2car.shiro.bean;
 
-public class Permission {
+import java.io.Serializable;
+
+public class Permission implements Serializable {
+    private static final long serialVersionUID = 1965432701465326212L;
+
     private Integer id;
 
     private String resource;

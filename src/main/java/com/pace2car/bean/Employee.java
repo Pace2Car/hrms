@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Employee implements Serializable {
+    private static final long serialVersionUID = 7165687747928943623L;
+
     private Integer empNo;
 
     private String empName;

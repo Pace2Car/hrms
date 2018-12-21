@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pace2car.dao.BonusMulctRecordMapper" >
+  <cache eviction="LRU" type="com.pace2car.redis.RedisCache" />
   <resultMap id="BaseResultMap" type="com.pace2car.bean.BonusMulctRecord" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="emp_no" property="empNo" jdbcType="INTEGER" />
@@ -13,7 +14,7 @@
   <sql id="Base_Column_List" >
     id, emp_no, bm_date, bm_amount, bm_reason, bm_type, remark
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true" >
     select 
     <include refid="Base_Column_List" />
     from bonus_mulct_record

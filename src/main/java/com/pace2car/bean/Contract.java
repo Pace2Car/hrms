@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Contract implements Serializable {
+    private static final long serialVersionUID = 6772785709057983049L;
+
     private Integer contractNo;
 
     private Date createTime;

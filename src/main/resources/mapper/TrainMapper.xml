@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pace2car.dao.TrainMapper">
+    <cache eviction="LRU" type="com.pace2car.redis.RedisCache" />
     <resultMap id="BaseResultMap" type="com.pace2car.bean.Train">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="subject" property="subject" jdbcType="VARCHAR"/>
@@ -27,7 +28,7 @@
         dept_no,
         refuse_reason
     </sql>
-    <select id="selectTrains" resultType="Train" parameterType="Train">
+    <select id="selectTrains" resultType="com.pace2car.bean.Train" parameterType="com.pace2car.bean.Train" useCache="true">
         select
             t.id as id,
             t.subject as subject,
@@ -53,7 +54,7 @@
             and t.emp_no = #{empNo,jdbcType=INTEGER}
         </if>
     </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true">
         select
         <include refid="Base_Column_List"/>
         from train

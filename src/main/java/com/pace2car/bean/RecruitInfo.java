@@ -3,6 +3,8 @@ package com.pace2car.bean;
 import java.io.Serializable;
 
 public class RecruitInfo implements Serializable {
+    private static final long serialVersionUID = 9221563786304549721L;
+
     private Integer id;
 
     private String title;

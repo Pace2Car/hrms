@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Train implements Serializable {
+    private static final long serialVersionUID = 1685259381303026914L;
+
     private Integer id;
 
     private String subject;

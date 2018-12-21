@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pace2car.shiro.dao.RoleMapper">
+    <cache eviction="LRU" type="com.pace2car.redis.RedisCache" />
     <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.Role">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
@@ -21,7 +22,7 @@
         name,
         short_name
     </sql>
-    <select id="selectAllRoles" resultMap="RolePermissionsMap">
+    <select id="selectAllRoles" resultMap="RolePermissionsMap" useCache="true" >
         select
             r.id as r_id,
             r.name as r_name,
@@ -34,7 +35,7 @@
         left join permission p on rp.pid = p.id
         order by r.id desc
     </select>
-    <select id="selectAllRolesByUsername" resultType="java.lang.String" parameterType="java.lang.String">
+    <select id="selectAllRolesByUsername" resultType="java.lang.String" parameterType="java.lang.String" useCache="true" >
         select
             r.short_name
         from role r,
@@ -46,7 +47,7 @@
           and
             u.username = #{username,jdbcType=VARCHAR}
     </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true" >
         select
         <include refid="Base_Column_List"/>
         from role

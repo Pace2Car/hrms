@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pace2car.dao.EmployeeMapper">
+    <cache eviction="LRU" type="com.pace2car.redis.RedisCache" />
     <resultMap id="BaseResultMap" type="com.pace2car.bean.Employee">
         <id column="emp_no" jdbcType="INTEGER" property="empNo"/>
         <result column="emp_name" jdbcType="VARCHAR" property="empName"/>
@@ -41,14 +42,14 @@
         status,
         contract_no
     </sql>
-    <select id="selectEmployees" resultMap="BaseResultMap" parameterType="Employee">
+    <select id="selectEmployees" resultMap="BaseResultMap" parameterType="Employee" useCache="true" >
         select
         <include refid="Base_Column_List"/>
         from employee
         where
         status = 1
     </select>
-    <select id="selectEmpPosition" resultType="Employee" parameterType="Employee">
+    <select id="selectEmpPosition" resultType="Employee" parameterType="Employee" useCache="true" >
         select
             e.emp_no   as empNo,
             e.emp_name as empName,
@@ -58,14 +59,14 @@
         where
             e.status = 1
     </select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap" useCache="true" >
         select
         <include refid="Base_Column_List"/>
         from employee
         where emp_no = #{empNo,jdbcType=INTEGER}
         and status = 1
     </select>
-    <select id="selectPosByPrimaryKey" parameterType="java.lang.Integer" resultType="Employee">
+    <select id="selectPosByPrimaryKey" parameterType="java.lang.Integer" resultType="Employee" useCache="true" >
         select
             e.emp_no      as empNo,
             e.emp_name    as empName,
@@ -76,7 +77,7 @@
         where emp_no = #{empNo,jdbcType=INTEGER}
           and e.status = 1
     </select>
-    <select id="selectSalByPrimaryKey" parameterType="java.lang.Integer" resultType="Employee">
+    <select id="selectSalByPrimaryKey" parameterType="java.lang.Integer" resultType="Employee" useCache="true" >
         select
             e.emp_no      as empNo,
             e.emp_name    as empName,
@@ -89,7 +90,7 @@
         where emp_no = #{empNo,jdbcType=INTEGER}
           and e.status = 1
     </select>
-    <select id="selectSalByDeptNo" parameterType="Employee" resultType="Employee">
+    <select id="selectSalByDeptNo" parameterType="Employee" resultType="Employee" useCache="true" >
         select
             e.emp_no      as empNo,
             e.emp_name    as empName,

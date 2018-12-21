@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pace2car.shiro.dao.RolePermissionMapper" >
+  <cache eviction="LRU" type="com.pace2car.redis.RedisCache" />
   <resultMap id="BaseResultMap" type="com.pace2car.shiro.bean.RolePermission" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="rid" property="rid" jdbcType="INTEGER" />
@@ -9,13 +10,13 @@
   <sql id="Base_Column_List" >
     id, rid, pid
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true" >
     select 
     <include refid="Base_Column_List" />
     from role_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectPermissionsByRid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectPermissionsByRid" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true" >
     select
     <include refid="Base_Column_List" />
     from role_permission

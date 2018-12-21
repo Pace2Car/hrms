@@ -3,6 +3,8 @@ package com.pace2car.shiro.bean;
 import java.io.Serializable;
 
 public class UserRole implements Serializable {
+    private static final long serialVersionUID = -4023491110334021546L;
+
     private Integer id;
 
     private Integer uid;

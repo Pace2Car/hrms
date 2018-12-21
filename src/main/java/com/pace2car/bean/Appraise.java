@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class Appraise implements Serializable {
+    private static final long serialVersionUID = -2653879171158986432L;
+
     private Integer id;
 
     private Integer empNo;
