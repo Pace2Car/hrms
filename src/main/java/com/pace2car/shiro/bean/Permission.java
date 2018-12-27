@@ -1,7 +1,14 @@
 package com.pace2car.shiro.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
+@Getter
+@Setter
+@Accessors(chain = true)
 public class Permission implements Serializable {
     private static final long serialVersionUID = 1965432701465326212L;
 
@@ -11,27 +18,4 @@ public class Permission implements Serializable {
 
     private String name;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
-    public void setResource(String resource) {
-        this.resource = resource == null ? null : resource.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
 }
