@@ -32,7 +32,7 @@
                 <h2>权限不足</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index.jsp">Home</a>
+                        <a href="views/index.jsp">Home</a>
                     </li>
                 </ol>
             </div>

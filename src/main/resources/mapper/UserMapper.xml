@@ -60,7 +60,8 @@
             u.create_time as createTime,
             u.last_login_time as lastLoginTime,
             u.status as status,
-            r.name as roleName
+            r.name as roleName,
+            ur.rid as rid
         from user u
                  left join user_role ur on u.id = ur.uid
                  left join role r on ur.rid = r.id

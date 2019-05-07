@@ -142,7 +142,7 @@ public class SerializeUtil {
             log.warn("Caught IOException decoding %d bytes of data",
                     in == null ? 0 : in.length, e);
         } catch (ClassNotFoundException e) {
-            log.warn("Caught CNFE decoding %d bytes of data",
+            log.warn("Caught ClassNotFoundException decoding %d bytes of data",
                     in == null ? 0 : in.length, e);
         } finally {
             close(is);

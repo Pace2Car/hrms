@@ -77,7 +77,7 @@
 
     <!-- Sprng-redis连接工厂 -->
     <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" id="jedisConnectionFactory"
-          p:host-name="${redis.hostName}" p:port="${redis.port}" p:pool-config-ref="jedisPoolConfig"/>
+          p:host-name="${redis.hostName}" p:port="${redis.port}" p:password="redis" p:pool-config-ref="jedisPoolConfig"/>
 
     <!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使MyBatis实现第三方缓存 -->
     <bean class="com.pace2car.redis.RedisCacheTransfer" id="redisCacheTransfer">

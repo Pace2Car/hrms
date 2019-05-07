@@ -16,6 +16,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -32,7 +33,7 @@ import java.util.Map;
 @RequestMapping("/system")
 public class SystemController {
 
-    static Logger logger = Logger.getLogger(SystemController.class);
+    private static Logger logger = Logger.getLogger(SystemController.class);
 
     @Autowired
     private UserService userService;
@@ -49,7 +50,7 @@ public class SystemController {
     @Autowired
     private RolePermissionService rolePermissionService;
 
-    @Autowired
+    @Resource
     private RequestMappingHandlerMapping handlerMapping;
 
     @RequestMapping("/searchUser")
@@ -224,7 +225,7 @@ public class SystemController {
     /**
      * 将系统中所有的权限表达式装入数据库
      */
-    @RequestMapping("/reloadPermission")
+    @RequestMapping(value = "/reloadPermission")
     @RequiresPermissions("permission:insert")
     @PermissionName("刷新权限")
     public String reloadPermission(ModelMap modelMap) {

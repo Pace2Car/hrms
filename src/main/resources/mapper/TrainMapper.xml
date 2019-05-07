@@ -46,7 +46,7 @@
         from train t
         left join employee e on t.emp_no = e.emp_no
         left join department d on t.dept_no = d.dept_no
-        where t.end_time &gt;= #{endTime,jdbcType=DATE}
+        where 1 = 1
         <if test="status != null">
             and t.status = #{status,jdbcType=INTEGER}
         </if>

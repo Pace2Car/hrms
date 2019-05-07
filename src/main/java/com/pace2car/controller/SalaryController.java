@@ -184,13 +184,13 @@ public class SalaryController {
             double sal = empSal.getBaseSalary();
             if (sal < 5000) {
                 level1++;
-            } else if (sal <= 10000){
+            } else if (sal <= 10000) {
                 level2++;
-            } else if (sal <= 15000){
+            } else if (sal <= 15000) {
                 level3++;
-            } else if (sal <= 20000){
+            } else if (sal <= 20000) {
                 level4++;
-            } else if (sal <= 30000){
+            } else if (sal <= 30000) {
                 level5++;
             } else {
                 level6++;

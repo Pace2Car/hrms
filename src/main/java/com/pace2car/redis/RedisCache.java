@@ -65,6 +65,7 @@ public class RedisCache implements Cache {
         Object result = null;
         JedisConnection connection = null;
         try {
+            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>getObject:" + key);
             connection = (JedisConnection) jedisConnectionFactory.getConnection();
             //借用spring_data_redis.jar中的JdkSerializationRedisSerializer.class
             RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();
@@ -112,7 +113,6 @@ public class RedisCache implements Cache {
             RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();
             //利用其序列化方法将数据写入redis服务的缓存中
             connection.set(serializer.serialize(key), serializer.serialize(value));
-
         } catch (JedisConnectionException e) {
             e.printStackTrace();
         } finally {

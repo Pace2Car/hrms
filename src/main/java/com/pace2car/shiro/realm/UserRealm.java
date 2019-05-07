@@ -77,12 +77,18 @@ public class UserRealm extends AuthorizingRealm {
             user.setLastLoginTime(new Date(System.currentTimeMillis()));
             userService.updateByPrimaryKeySelective(user);
         }
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(user.getUsername()), getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
+                user,
+                user.getPassword(),
+                ByteSource.Util.bytes(user.getUsername()),
+                getName());
 
         return info;
     }
 
-    //清处缓存
+    /**
+     * 清除缓存
+     */
     protected void clearCache() {
         PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
         super.clearCache(principals);

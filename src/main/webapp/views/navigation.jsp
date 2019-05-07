@@ -42,6 +42,7 @@
                     <span class="nav-label">&nbsp;首页</span> <span class="fa "></span>
                 </a>
             </li>
+            <shiro:hasAnyRoles name="hr,admin">
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-user"></i>
@@ -59,6 +60,8 @@
                     </shiro:hasPermission>
                 </ul>
             </li>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="mgr,admin">
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-th-list"></i>
@@ -73,6 +76,7 @@
                     </shiro:hasPermission>
                 </ul>
             </li>
+            </shiro:hasAnyRoles>
             <li >
                 <a href="javascript:void(0)">
                     <i class="fa fa-usd"></i>
@@ -89,7 +93,7 @@
                     </shiro:hasPermission>
                 </ul>
             </li>
-            <shiro:hasRole name="mgr">
+            <shiro:hasAnyRoles name="mgr,admin">
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-whatsapp"></i>
@@ -102,7 +106,7 @@
                     <li><a href="recruit/searchInterview">面试安排</a></li>
                 </ul>
             </li>
-            </shiro:hasRole>
+            </shiro:hasAnyRoles>
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-paperclip"></i>
@@ -111,12 +115,12 @@
                 <ul class="nav nav-second-level">
                     <li><a href="train/addTrain">申请培训</a></li>
                     <li><a href="train/checkMyTrain">我的个人培训</a></li>
-                    <shiro:hasRole name="mgr">
+                    <shiro:hasAnyRoles name="mgr,admin">
                     <li><a href="train/searchTrain">培训计划管理</a></li>
-                    </shiro:hasRole>
+                    </shiro:hasAnyRoles>
                 </ul>
             </li>
-            <shiro:hasRole name="hr">
+            <shiro:hasAnyRoles name="hr,admin">
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-tags"></i>
@@ -127,7 +131,7 @@
                     <li><a href="assess/searchAppraise">员工考核</a></li>
                 </ul>
             </li>
-            </shiro:hasRole>
+            </shiro:hasAnyRoles>
             <shiro:hasRole name="admin">
             <li>
                 <a href="javascript:void(0)">
