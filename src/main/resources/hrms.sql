@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 10/01/2019 13:47:17
+ Date: 09/05/2019 17:16:49
 */
 
 SET NAMES utf8mb4;
@@ -165,13 +165,6 @@ INSERT INTO `department` VALUES (11, 'Sales', NULL, 1);
 INSERT INTO `department` VALUES (13, 'Finance', NULL, 1);
 INSERT INTO `department` VALUES (15, 'Personnel', NULL, 1);
 INSERT INTO `department` VALUES (18, 'Administration', NULL, 1);
-INSERT INTO `department` VALUES (21, 'aaa', NULL, 1);
-INSERT INTO `department` VALUES (22, 'vvv', NULL, 1);
-INSERT INTO `department` VALUES (23, 'ccc', NULL, 1);
-INSERT INTO `department` VALUES (24, 'ddd', 23, 1);
-INSERT INTO `department` VALUES (25, 'eee', NULL, 1);
-INSERT INTO `department` VALUES (26, 'zzxcasd', NULL, 1);
-INSERT INTO `department` VALUES (27, 'dsadsf', NULL, 1);
 
 -- ----------------------------
 -- Table structure for employee
@@ -199,26 +192,24 @@ CREATE TABLE `employee`  (
   PRIMARY KEY (`emp_no`) USING BTREE,
   INDEX `contract_no`(`contract_no`) USING BTREE,
   INDEX `position_id`(`position_id`) USING BTREE,
-  INDEX `dept_no`(`dept_no`) USING BTREE,
-  CONSTRAINT `contract_no` FOREIGN KEY (`contract_no`) REFERENCES `contract` (`contract_no`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `dept_no` FOREIGN KEY (`dept_no`) REFERENCES `department` (`dept_no`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `position_id` FOREIGN KEY (`position_id`) REFERENCES `position` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  INDEX `dept_no`(`dept_no`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of employee
 -- ----------------------------
 INSERT INTO `employee` VALUES (1, 'chenjiahao', 18, 7000.00, 800.00, 50.00, '男', '2018-01-01', '汉', '15528172715', 'pace2car.com', '四川省成都市新都区大丰镇大天路100号', '本科', 1, '2018-12-10 17:54:46', '2018-12-10 18:22:48', 1, NULL);
-INSERT INTO `employee` VALUES (2, 'sale man', 11, 2000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, 36, '2018-12-10 17:14:42', NULL, 1, NULL);
-INSERT INTO `employee` VALUES (3, 'finance man', 13, 12500.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, 39, '2018-12-10 17:15:24', NULL, 1, NULL);
-INSERT INTO `employee` VALUES (4, '陈家豪', 11, 3000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, 41, '2018-12-10 17:15:30', NULL, 1, NULL);
-INSERT INTO `employee` VALUES (5, 'aaa', 10, 36000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, 2, '2018-12-10 17:48:53', '2018-12-10 00:00:00', 1, NULL);
-INSERT INTO `employee` VALUES (6, 'asfasdfsadf', 24, 18000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, NULL, '2018-12-10 17:15:50', '2018-12-10 18:02:55', 1, NULL);
-INSERT INTO `employee` VALUES (7, '12312dsaasd', 15, 10000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, NULL, '2018-12-10 17:15:50', '2018-12-10 18:22:48', 1, NULL);
-INSERT INTO `employee` VALUES (8, 'adsfasdf', 24, 2341.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, NULL, '2018-12-10 17:15:50', NULL, 1, NULL);
-INSERT INTO `employee` VALUES (9, 'gfhjgfj', 25, 30000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, NULL, '2018-12-10 17:15:50', '2018-12-12 19:14:32', 1, NULL);
-INSERT INTO `employee` VALUES (10, 'dsfgdfg', 26, 4450.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, NULL, '2018-12-10 17:15:50', NULL, 1, NULL);
-INSERT INTO `employee` VALUES (11, 'lfdjkhlfsh', 13, 27000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, 43, '2018-12-10 17:15:50', NULL, 1, NULL);
+INSERT INTO `employee` VALUES (2, 'sale man', 11, 2000.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, 51, '2018-12-10 17:14:42', NULL, 1, NULL);
+INSERT INTO `employee` VALUES (3, 'finance man', 13, 12500.00, 0.00, 0.00, '男', NULL, '汉', NULL, NULL, NULL, NULL, 52, '2018-12-10 17:15:24', NULL, 1, NULL);
+INSERT INTO `employee` VALUES (4, '陈家豪', 18, 3000.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 2, '2018-12-10 17:15:30', NULL, 1, NULL);
+INSERT INTO `employee` VALUES (5, '开发仔', 10, 36000.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 50, '2018-12-10 17:48:53', '2018-12-10 00:00:00', 1, NULL);
+INSERT INTO `employee` VALUES (6, '何某', 18, 18000.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 49, '2018-12-10 17:15:50', '2018-12-10 18:02:55', 1, NULL);
+INSERT INTO `employee` VALUES (7, '卢某', 15, 10000.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 48, '2018-12-10 17:15:50', '2018-12-10 18:22:48', 1, NULL);
+INSERT INTO `employee` VALUES (8, '阚某', 18, 2341.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 47, '2018-12-10 17:15:50', NULL, 1, NULL);
+INSERT INTO `employee` VALUES (9, '谢某', 18, 30000.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 46, '2018-12-10 17:15:50', '2018-12-12 19:14:32', 1, NULL);
+INSERT INTO `employee` VALUES (10, '李某', 18, 4450.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 48, '2018-12-10 17:15:50', NULL, 1, NULL);
+INSERT INTO `employee` VALUES (11, '人事经理', 18, 27000.00, 0.00, 0.00, '男', NULL, '汉', '', '', '', '', 48, '2018-12-10 17:15:50', NULL, 1, NULL);
+INSERT INTO `employee` VALUES (12, '普通员工', 10, 0.00, 0.00, 0.00, '', NULL, '', '', '', NULL, NULL, 50, '2019-05-09 10:44:56', NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for interview
@@ -255,7 +246,7 @@ CREATE TABLE `permission`  (
   `resource` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '可用资源',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '资源描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permission
@@ -293,6 +284,8 @@ INSERT INTO `permission` VALUES (37, 'role:select', '查询角色');
 INSERT INTO `permission` VALUES (38, 'user:insert', '新增用户');
 INSERT INTO `permission` VALUES (39, 'role:update', '更新用户');
 INSERT INTO `permission` VALUES (40, 'role:insert', '新增用户');
+INSERT INTO `permission` VALUES (41, 'permission:select', '查询权限');
+INSERT INTO `permission` VALUES (42, 'user:update', '更新用户');
 
 -- ----------------------------
 -- Table structure for position
@@ -305,18 +298,22 @@ CREATE TABLE `position`  (
   `status` tinyint(1) NULL DEFAULT 1 COMMENT '状态 1：可用，0：不可用',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`pos_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of position
 -- ----------------------------
 INSERT INTO `position` VALUES (1, '总裁', '2018-12-07 17:04:04', 1);
 INSERT INTO `position` VALUES (2, '副总裁', '2018-12-10 13:59:09', 1);
-INSERT INTO `position` VALUES (36, 'aaa', '2018-12-10 16:30:47', 1);
-INSERT INTO `position` VALUES (39, 'bbb', '2018-12-10 16:31:22', 1);
-INSERT INTO `position` VALUES (41, 'ccc', '2018-12-10 16:32:09', 1);
-INSERT INTO `position` VALUES (42, 'ddd', '2018-12-10 16:33:20', 1);
-INSERT INTO `position` VALUES (43, 'ee', '2018-12-10 16:47:47', 1);
+INSERT INTO `position` VALUES (44, '总经理', '2019-05-09 16:40:18', 1);
+INSERT INTO `position` VALUES (45, '副总经理', '2019-05-09 16:40:24', 1);
+INSERT INTO `position` VALUES (46, '部门经理', '2019-05-09 16:41:10', 1);
+INSERT INTO `position` VALUES (47, '人事经理', '2019-05-09 16:41:17', 1);
+INSERT INTO `position` VALUES (48, '研发工程师', '2019-05-09 16:41:29', 1);
+INSERT INTO `position` VALUES (49, '测试工程师', '2019-05-09 16:41:35', 1);
+INSERT INTO `position` VALUES (50, '运维工程师', '2019-05-09 16:41:43', 1);
+INSERT INTO `position` VALUES (51, '销售', '2019-05-09 16:41:53', 1);
+INSERT INTO `position` VALUES (52, '后勤', '2019-05-09 16:42:11', 1);
 
 -- ----------------------------
 -- Table structure for recruit_info
@@ -336,7 +333,7 @@ CREATE TABLE `recruit_info`  (
   `status` int(1) NULL DEFAULT 1 COMMENT '招聘状态 1：在招，0：停止招聘',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `recruit_fk_position_id`(`position_id`) USING BTREE,
-  CONSTRAINT `recruit_fk_position_id` FOREIGN KEY (`position_id`) REFERENCES `position` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `recruit_fk_position_id` FOREIGN KEY (`position_id`) REFERENCES `position` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '招聘信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -347,11 +344,11 @@ INSERT INTO `recruit_info` VALUES (2, '111', '123', 3, 4, '10年以上', '研究
 INSERT INTO `recruit_info` VALUES (3, '111', '123', 4, 5, '10年以上', '研究生及以上', 333, 1, '55555555555', 1);
 INSERT INTO `recruit_info` VALUES (4, '111', '123', 12, 24, '10年以上', '研究生及以上', 333, 1, '55555555555', 0);
 INSERT INTO `recruit_info` VALUES (5, '22', '222', 0, 0, '10年以上', '研究生及以上', 0, 1, '', 0);
-INSERT INTO `recruit_info` VALUES (6, '555', '北京', 50, 60, '5-10年', '研究生及以上', 1, 36, '联系：12312412\r\n要求：有经验', 0);
+INSERT INTO `recruit_info` VALUES (6, '555', '北京', 50, 60, '5-10年', '研究生及以上', 1, 2, '联系：12312412\r\n要求：有经验\r\n', 0);
 INSERT INTO `recruit_info` VALUES (7, '123', '2131', 12, 25, '10年以上', '研究生及以上', 134, 1, '1324234', 1);
 INSERT INTO `recruit_info` VALUES (8, '123', '123', 13, 25, '10年以上', '研究生及以上', 33, 1, '1313254', 1);
-INSERT INTO `recruit_info` VALUES (9, '扫地僧', '成都', 1, 2, '不限', '不限', 2, 43, '性别限女', 1);
-INSERT INTO `recruit_info` VALUES (12, '开发', '成都', 12, 20, '3-5年', '本科', 5, 36, '开发', 1);
+INSERT INTO `recruit_info` VALUES (9, '扫地僧', '成都', 1, 2, '不限', '不限', 2, 2, '性别限女\r\n', 1);
+INSERT INTO `recruit_info` VALUES (12, '开发', '成都', 12, 20, '3-5年', '本科', 5, 1, '开发\r\n', 1);
 
 -- ----------------------------
 -- Table structure for resume
@@ -380,10 +377,10 @@ CREATE TABLE `resume`  (
 -- Records of resume
 -- ----------------------------
 INSERT INTO `resume` VALUES (1, 'aaa', 25, '男', '大大大学', '计算机', '本科', '3年', 4, 1, 12345678910, 1, 1);
-INSERT INTO `resume` VALUES (2, 'bbb', 25, '男', '大大大学', '计算机', '本科', '3年', 4, 36, 12345678910, 1, 0);
-INSERT INTO `resume` VALUES (3, 'ccc', 25, '男', '大大大学', '计算机', '本科', '3年', 2, 39, 12345678910, 2, 0);
-INSERT INTO `resume` VALUES (4, 'ddd', 25, '男', '大大大学', '计算机', '本科', '3年', 4, 41, 12345678910, 1, 1);
-INSERT INTO `resume` VALUES (5, 'aaaee', 25, '男', '大大大学', '计算机', '本科', '3年', 8, 43, 12345678910, 1, 0);
+INSERT INTO `resume` VALUES (2, 'bbb', 25, '男', '大大大学', '计算机', '本科', '3年', 4, 1, 12345678910, 1, 0);
+INSERT INTO `resume` VALUES (3, 'ccc', 25, '男', '大大大学', '计算机', '本科', '3年', 2, 1, 12345678910, 2, 0);
+INSERT INTO `resume` VALUES (4, 'ddd', 25, '男', '大大大学', '计算机', '本科', '3年', 4, 1, 12345678910, 1, 1);
+INSERT INTO `resume` VALUES (5, 'aaaee', 25, '男', '大大大学', '计算机', '本科', '3年', 8, 1, 12345678910, 1, 0);
 
 -- ----------------------------
 -- Table structure for role
@@ -394,7 +391,7 @@ CREATE TABLE `role`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '角色名称',
   `short_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简写',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role
@@ -402,6 +399,9 @@ CREATE TABLE `role`  (
 INSERT INTO `role` VALUES (1, '超级管理员', 'admin');
 INSERT INTO `role` VALUES (2, '人事经理', 'hr');
 INSERT INTO `role` VALUES (5, '部门经理', 'mgr');
+INSERT INTO `role` VALUES (6, '普通员工', 'normal');
+INSERT INTO `role` VALUES (12, '测试', 'test');
+INSERT INTO `role` VALUES (13, '测试无权限', 'testno');
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -412,30 +412,42 @@ CREATE TABLE `role_permission`  (
   `rid` int(6) NULL DEFAULT NULL COMMENT '角色ID',
   `pid` int(6) NULL DEFAULT NULL COMMENT '权限ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_permission
 -- ----------------------------
-INSERT INTO `role_permission` VALUES (19, 5, 31);
-INSERT INTO `role_permission` VALUES (20, 5, 22);
-INSERT INTO `role_permission` VALUES (21, 5, 25);
-INSERT INTO `role_permission` VALUES (22, 5, 18);
-INSERT INTO `role_permission` VALUES (23, 5, 17);
-INSERT INTO `role_permission` VALUES (24, 5, 20);
-INSERT INTO `role_permission` VALUES (25, 5, 19);
-INSERT INTO `role_permission` VALUES (26, 5, 26);
-INSERT INTO `role_permission` VALUES (27, 5, 23);
-INSERT INTO `role_permission` VALUES (28, 5, 21);
-INSERT INTO `role_permission` VALUES (29, 5, 28);
-INSERT INTO `role_permission` VALUES (30, 5, 29);
 INSERT INTO `role_permission` VALUES (31, 1, 1);
-INSERT INTO `role_permission` VALUES (32, 2, 8);
-INSERT INTO `role_permission` VALUES (33, 2, 14);
-INSERT INTO `role_permission` VALUES (34, 2, 15);
-INSERT INTO `role_permission` VALUES (35, 2, 2);
-INSERT INTO `role_permission` VALUES (36, 2, 31);
-INSERT INTO `role_permission` VALUES (37, 2, 3);
+INSERT INTO `role_permission` VALUES (38, 2, 5);
+INSERT INTO `role_permission` VALUES (39, 2, 4);
+INSERT INTO `role_permission` VALUES (40, 2, 6);
+INSERT INTO `role_permission` VALUES (41, 2, 7);
+INSERT INTO `role_permission` VALUES (42, 2, 8);
+INSERT INTO `role_permission` VALUES (43, 2, 14);
+INSERT INTO `role_permission` VALUES (44, 2, 15);
+INSERT INTO `role_permission` VALUES (45, 2, 2);
+INSERT INTO `role_permission` VALUES (46, 2, 31);
+INSERT INTO `role_permission` VALUES (47, 2, 22);
+INSERT INTO `role_permission` VALUES (48, 2, 25);
+INSERT INTO `role_permission` VALUES (49, 2, 26);
+INSERT INTO `role_permission` VALUES (50, 2, 23);
+INSERT INTO `role_permission` VALUES (51, 2, 21);
+INSERT INTO `role_permission` VALUES (52, 2, 28);
+INSERT INTO `role_permission` VALUES (53, 2, 29);
+INSERT INTO `role_permission` VALUES (54, 2, 35);
+INSERT INTO `role_permission` VALUES (55, 2, 34);
+INSERT INTO `role_permission` VALUES (56, 2, 36);
+INSERT INTO `role_permission` VALUES (57, 5, 12);
+INSERT INTO `role_permission` VALUES (58, 5, 9);
+INSERT INTO `role_permission` VALUES (59, 5, 8);
+INSERT INTO `role_permission` VALUES (60, 5, 2);
+INSERT INTO `role_permission` VALUES (61, 5, 18);
+INSERT INTO `role_permission` VALUES (62, 5, 17);
+INSERT INTO `role_permission` VALUES (63, 5, 20);
+INSERT INTO `role_permission` VALUES (64, 5, 19);
+INSERT INTO `role_permission` VALUES (65, 5, 35);
+INSERT INTO `role_permission` VALUES (66, 6, 3);
+INSERT INTO `role_permission` VALUES (67, 12, 1);
 
 -- ----------------------------
 -- Table structure for train
@@ -485,15 +497,16 @@ CREATE TABLE `user`  (
   UNIQUE INDEX `username`(`username`) USING BTREE COMMENT '唯一',
   INDEX `empno`(`emp_no`) USING BTREE,
   CONSTRAINT `empno` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, '2018-12-06 11:57:06', '2018-12-21 10:53:41', 1);
-INSERT INTO `user` VALUES (2, 'chenjiahao', '3abed0045f0ac324369d1add434df047', 4, '2018-12-19 17:03:48', '2018-12-20 18:34:23', 1);
+INSERT INTO `user` VALUES (1, 'admin', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, '2018-12-06 11:57:06', '2019-05-09 17:11:50', 1);
+INSERT INTO `user` VALUES (2, 'chenjiahao', '3abed0045f0ac324369d1add434df047', 4, '2018-12-19 17:03:48', '2019-02-21 10:53:08', 1);
 INSERT INTO `user` VALUES (5, 'testMD5', '5e11bc1c1437a52fcfdefabad5828ac3', 3, '2018-12-20 12:58:52', '2018-12-20 18:25:53', 1);
-INSERT INTO `user` VALUES (6, 'aaa', 'f51775f5ed43dc50a7488567bb234541', 5, '2018-12-20 13:50:51', '2018-12-20 18:07:55', 1);
+INSERT INTO `user` VALUES (6, 'dept', 'f51775f5ed43dc50a7488567bb234541', 5, '2018-12-20 13:50:51', '2019-02-21 10:55:39', 1);
+INSERT INTO `user` VALUES (7, 'normal', 'f2a56261d9575fc80605f347e77384c3', 12, '2019-05-09 11:38:57', '2019-05-09 11:39:23', 1);
 
 -- ----------------------------
 -- Table structure for user_role
@@ -504,7 +517,7 @@ CREATE TABLE `user_role`  (
   `uid` int(6) NULL DEFAULT NULL COMMENT '用户ID',
   `rid` int(6) NULL DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role
@@ -513,6 +526,7 @@ INSERT INTO `user_role` VALUES (1, 1, 1);
 INSERT INTO `user_role` VALUES (2, 2, 2);
 INSERT INTO `user_role` VALUES (3, 4, 2);
 INSERT INTO `user_role` VALUES (4, 5, 1);
-INSERT INTO `user_role` VALUES (5, 6, 2);
+INSERT INTO `user_role` VALUES (5, 6, 5);
+INSERT INTO `user_role` VALUES (6, 7, 13);
 
 SET FOREIGN_KEY_CHECKS = 1;

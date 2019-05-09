@@ -101,7 +101,7 @@
                                         <tr id="tr_${emp.empNo}" class="gradeA odd" role="row">
                                             <td class="sorting_1">${emp.empNo}</td>
                                             <td>${emp.empName}</td>
-                                            <td>${emp.deptNo}</td>
+                                            <td>${emp.deptName}</td>
                                             <td class="center">
                                                 <a href="#" empNo="${emp.empNo}" onclick="toUpdate(this)"
                                                    class="btn btn-info btn-sm" data-toggle="modal"
@@ -225,7 +225,7 @@
                             </div>
                             <br/><br/>
                             <div class="input-group input-group-md">
-                                <div class="input-group-addon" style="width: 110px">职务：</div>
+                                <div class="input-group-addon" style="width: 110px">职位：</div>
                                 <select name="positionId" id="newPositionId"
                                         style="width: 300px"
                                         class="form-control" placeholder="请选择职位"
@@ -298,12 +298,14 @@
             $("#newPositionId").empty();
             // $("#newDeptNo").append("<option value=''>不限--</option>");
             $.each(resp, function (i,v) {
-                var option = new Option(v.posName, v.positionId);
+                var option = new Option(v.posName, v.id);
                 $("#newPositionId").append(option);
             });
         },"json");
         $("#insertBtn").click(function () {
-            console.dirxml($("#empName").val());
+            console.dirxml($("#newEmpName").val());
+            console.dirxml($("#newDeptNo").val());
+            console.dirxml($("#newPositionId").val());
             var employee = $("#insertForm").serialize();
             $.get("employee/insertEmployee", employee, function (json) {
                 if (json.actionFlag) {

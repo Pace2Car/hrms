@@ -21,6 +21,7 @@
         <result column="departure_time" jdbcType="TIMESTAMP" property="departureTime"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="contract_no" jdbcType="INTEGER" property="contractNo"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
     </resultMap>
     <sql id="Base_Column_List">
         emp_no,
@@ -42,12 +43,31 @@
         status,
         contract_no
     </sql>
-    <select id="selectEmployees" resultMap="BaseResultMap" parameterType="Employee" useCache="true" >
+    <select id="selectEmployees" resultType="Employee" parameterType="Employee" useCache="true" >
         select
-        <include refid="Base_Column_List"/>
-        from employee
+            e.emp_no as empNo,
+            e.emp_name as empName,
+            e.dept_no as deptNo,
+            e.base_salary as baseSalary,
+            e.bonus as bonus,
+            e.mulct as mulct,
+            e.gender as gender,
+            e.birthday as birthday,
+            e.ethnic as ethnic,
+            e.telephone as telephone,
+            e.email as email,
+            e.address as address,
+            e.education as education,
+            e.position_id as positionId,
+            e.entry_time as entryTime,
+            e.departure_time as departureTime,
+            e.status as status,
+            e.contract_no as contractNo,
+            d.dept_name as deptName
+        from employee e,department d
         where
-        status = 1
+              e.dept_no = d.dept_no
+              and e.status = 1
     </select>
     <select id="selectEmpPosition" resultType="Employee" parameterType="Employee" useCache="true" >
         select

@@ -31,7 +31,7 @@
             <br/><br/>
             <div class="form-group">
                 <div class="input-group input-group-md">
-                    <div class="input-group-addon" style="width: 110px;">员工姓名：</div>
+                    <div class="input-group-addon" style="width: 110px;">用户名：</div>
                     <input style="width: 300px" type="text" class="form-control" id="username" value="${oldUser.username}"
                            name="" placeholder="请输入员工姓名" disabled>
                 </div>

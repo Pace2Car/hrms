@@ -38,48 +38,6 @@ public class RedisCache implements Cache {
         this.id = id;
     }
 
-    @Override
-    public void clear() {
-        JedisConnection connection = null;
-        try {
-            //连接清除数据
-            connection = (JedisConnection) jedisConnectionFactory.getConnection();
-            connection.flushDb();
-            connection.flushAll();
-        } catch (JedisConnectionException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public Object getObject(Object key) {
-        Object result = null;
-        JedisConnection connection = null;
-        try {
-            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>getObject:" + key);
-            connection = (JedisConnection) jedisConnectionFactory.getConnection();
-            //借用spring_data_redis.jar中的JdkSerializationRedisSerializer.class
-            RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();
-            //利用其反序列化方法获取值
-            result = serializer.deserialize(connection.get(serializer.serialize(key)));
-        } catch (JedisConnectionException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return result;
-    }
 
     @Override
     public ReadWriteLock getReadWriteLock() {
@@ -104,10 +62,36 @@ public class RedisCache implements Cache {
     }
 
     @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public Object getObject(Object key) {
+        Object result = null;
+        JedisConnection connection = null;
+        try {
+            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>getObject");
+            connection = (JedisConnection) jedisConnectionFactory.getConnection();
+            //借用spring_data_redis.jar中的JdkSerializationRedisSerializer.class
+            RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();
+            //利用其反序列化方法获取值
+            result = serializer.deserialize(connection.get(serializer.serialize(key)));
+        } catch (JedisConnectionException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+
+    @Override
     public void putObject(Object key, Object value) {
         JedisConnection connection = null;
         try {
-            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>putObject:" + key + "=" + value);
+            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>putObject");
             connection = (JedisConnection) jedisConnectionFactory.getConnection();
             //借用spring_data_redis.jar中的JdkSerializationRedisSerializer.class
             RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();
@@ -138,6 +122,23 @@ public class RedisCache implements Cache {
             }
         }
         return result;
+    }
+
+    @Override
+    public void clear() {
+        JedisConnection connection = null;
+        try {
+            //连接清除数据
+            connection = (JedisConnection) jedisConnectionFactory.getConnection();
+            connection.flushDb();
+            connection.flushAll();
+        } catch (JedisConnectionException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
     }
 
     public static void setJedisConnectionFactory(JedisConnectionFactory jedisConnectionFactory) {

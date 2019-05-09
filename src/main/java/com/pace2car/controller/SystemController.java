@@ -183,7 +183,8 @@ public class SystemController {
         logger.info("insert role -> name : " + role.getName());
         try {
             if (roleService.insertSelective(role) > 0) {
-                addRolePermission(role, response);
+                response.getWriter().write("{\"actionFlag\": true}");
+                addRolePermission(role);
             } else {
                 response.getWriter().write("{\"actionFlag\": false}");
             }
@@ -201,7 +202,8 @@ public class SystemController {
         try {
             if (role!= null && role.getPermissionList() != null) {
                 rolePermissionService.deleteByRid(role.getId());
-                addRolePermission(role, response);
+                response.getWriter().write("{\"actionFlag\": true}");
+                addRolePermission(role);
             } else {
                 response.getWriter().write("{\"actionFlag\": false}");
             }
@@ -211,14 +213,13 @@ public class SystemController {
         }
     }
 
-    private void addRolePermission(Role role, HttpServletResponse response) throws IOException {
+    private void addRolePermission(Role role) {
         RolePermission rolePermission = new RolePermission();
         rolePermission.setRid(role.getId());
         for (Integer pid : role.getPermissionList()) {
             rolePermission.setPid(pid);
             rolePermissionService.insertSelective(rolePermission);
         }
-        response.getWriter().write("{\"actionFlag\": true}");
     }
 
 

@@ -151,7 +151,7 @@
             var employee = $("#updateForm").serialize();
             $.post("employee/updateEmployee", employee, function (json) {
                 $("#tr_" + $("#empNo").val() + " td:eq(1)").text($("#newName").val());
-                $("#tr_" + $("#empNo").val() + " td:eq(2)").text($("#updateDeptNo :selected").val());
+                $("#tr_" + $("#empNo").val() + " td:eq(2)").text($("#updateDeptNo :selected").text());
                 console.dirxml($("#tr_" + $("#empNo").val())[0]);
                 if (json.actionFlag) {
                     $('#successAlert').slideDown();

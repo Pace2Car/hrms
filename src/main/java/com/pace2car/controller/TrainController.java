@@ -33,14 +33,12 @@ public class TrainController {
     private TrainService trainService;
 
     @RequestMapping("/addTrain")
-    @RequiresPermissions("train:insert")
     @PermissionName("新增培训")
     public String addTrain() {
         return "addTrain";
     }
 
     @RequestMapping("/insertTrain")
-    @RequiresPermissions("train:insert")
     @PermissionName("新增培训")
     public void insertRecruit(Train train, HttpServletResponse response) {
         logger.info("insert train -> name : " + train.getSubject());
