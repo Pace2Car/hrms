@@ -93,7 +93,7 @@
                     </shiro:hasPermission>
                 </ul>
             </li>
-            <shiro:hasAnyRoles name="mgr,admin">
+            <shiro:hasAnyRoles name="hr,admin">
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-whatsapp"></i>
@@ -115,7 +115,7 @@
                 <ul class="nav nav-second-level">
                     <li><a href="train/addTrain">申请培训</a></li>
                     <li><a href="train/checkMyTrain">我的个人培训</a></li>
-                    <shiro:hasAnyRoles name="mgr,admin">
+                    <shiro:hasAnyRoles name="hr,admin">
                     <li><a href="train/searchTrain">培训计划管理</a></li>
                     </shiro:hasAnyRoles>
                 </ul>
