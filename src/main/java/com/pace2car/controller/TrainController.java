@@ -55,7 +55,6 @@ public class TrainController {
     }
 
     @RequestMapping("/searchTrain")
-    @RequiresPermissions("train:select")
     @PermissionName("查询培训")
     public String searchResume(Train train, ModelMap modelMap, HttpSession session) {
         List<Train> trains = null;

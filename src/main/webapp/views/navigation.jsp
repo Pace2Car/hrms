@@ -42,7 +42,7 @@
                     <span class="nav-label">&nbsp;首页</span> <span class="fa "></span>
                 </a>
             </li>
-            <shiro:hasAnyRoles name="hr,admin">
+            <shiro:hasAnyRoles name="hr,mgr,admin">
             <li>
                 <a href="javascript:void(0)">
                     <i class="fa fa-user"></i>
